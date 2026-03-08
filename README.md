@@ -1,6 +1,10 @@
 <p align="center">
   <img src="HyperMenu.jpeg">
 </p>
+--------
+# NOTICE:
+* This menu is forked from the original MalumMenu. All credit goes to scp222thj.
+--------
 
 <p align="center">
   <a href="https://discord.gg/YYcYf88jAb">
