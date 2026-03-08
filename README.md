@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://scp222thj.dev/static/images/malumLogo.png">
+  <img src="HyperMenu.jpeg">
 </p>
 
 <p align="center">
