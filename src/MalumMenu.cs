@@ -27,7 +27,6 @@ public partial class MalumMenu : BasePlugin
     public static ProtectUI protectUI;
 
     public static string malumVersion = "3.0.0";
-    public static string hyperVersion = "2.0.0";
     public static List<string> supportedAU = new List<string> { "2026.2.24" };
 
     public static ConfigEntry<string> menuKeybind;

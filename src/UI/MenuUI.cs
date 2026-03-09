@@ -24,6 +24,13 @@ public class MenuUI : MonoBehaviour
     private Vector2 configScrollPosition = Vector2.zero;
     private Vector2 contentScrollPosition = Vector2.zero;
 
+    // Keybind popup state
+    private bool showKeybindPopup = false;
+    private string keybindTargetToggle = "";
+    private string keybindTargetLabel = "";
+    private bool waitingForKey = false;
+    private Rect keybindPopupRect = new(200, 200, 300, 150);
+
     // Platform spoofing options
     private readonly string[] platformOptions = new string[] 
     { 
@@ -38,12 +45,6 @@ public class MenuUI : MonoBehaviour
     // Create all groups (buttons) and their toggles on start
     private void Start()
     {
-        // Home tab - credits
-        groups.Add(new GroupInfo("Home", false,
-            new List<ToggleInfo>(),
-            new List<SubmenuInfo>()
-        ));
-
         groups.Add(new GroupInfo("Player", false,
             new List<ToggleInfo>() {
                 new ToggleInfo(" NoClip", () => CheatToggles.noClip, x => CheatToggles.noClip = x),
@@ -426,7 +427,7 @@ public class MenuUI : MonoBehaviour
 
         UIHelpers.ApplyUIColor();
 
-        windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)WindowFunction, "HyperMenu V" + MalumMenu.hyperVersion + ", forked from MalumMenu V" + MalumMenu.malumVersion, windowStyle);
+        windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)WindowFunction, "HyperMenu 1.0.1, forked from MalumMenu v" + MalumMenu.malumVersion, windowStyle);
     }
 
     public void WindowFunction(int windowID)
@@ -494,13 +495,6 @@ public class MenuUI : MonoBehaviour
     public void DrawTabContents(int groupId)
     {
         var group = groups[groupId];
-
-        // Special handling for Home tab
-        if (group.name == "Home")
-        {
-            DrawHomeTab();
-            return;
-        }
 
         // Special handling for Config tab
         if (group.name == "Config")
@@ -583,20 +577,6 @@ public class MenuUI : MonoBehaviour
         GUILayout.EndHorizontal();
 
         GUILayout.EndScrollView();
-    }
-
-    private void DrawHomeTab()
-    {
-        GUILayout.Space(20);
-
-        GUILayout.BeginVertical();
-
-        GUILayout.Label("HyperMenu V" + MalumMenu.hyperVersion + " by ADHyperActive", tabTitleStyle);
-        GUILayout.Space(10);
-        GUILayout.Label("Forked from MalumMenu V" + MalumMenu.malumVersion + " by scp222thj.");
-        GUILayout.Label("All credit goes to scp222thj.");
-
-        GUILayout.EndVertical();
     }
 
     private void DrawConfigTab(GroupInfo group)
