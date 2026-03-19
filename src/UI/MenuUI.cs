@@ -427,7 +427,7 @@ public class MenuUI : MonoBehaviour
 
         UIHelpers.ApplyUIColor();
 
-        windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)WindowFunction, "HyperMenu 1.0.1, forked from MalumMenu v" + MalumMenu.malumVersion, windowStyle);
+        windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)WindowFunction, "HyperMenuV" + MalumMenu.hyperVersion + ", forked from MalumMenu V" + MalumMenu.malumVersion, windowStyle);
     }
 
     public void WindowFunction(int windowID)
