@@ -25,7 +25,7 @@
     <img hspace="6" src="https://img.shields.io/github/downloads/ADHyperActive/MalumMenu/total?style=flat&logo=github&label=Total%20Downloads&color=2ECC71" alt="Downloads">
   </a>
 
-  `I don't want money from this fork since it's just developed because I don't want to burden the devs with my feature requests. Therefore, I'm not including a button to support me. -ADHyperActive`
+  `I don't want money from this fork since it's just developed because I don't want to burden the devs with my feature requests. Therefore, I'm not including a button to support me. If you would like to support this project, please support the developers of the original MalumMenu instead, as this project would not be possible without their work. -ADHyperActive`
 </p>
 
 <p align="center">
@@ -47,16 +47,20 @@
 
 | Mod Version| Among Us - Version | Link |
 |----------|-------------|-----------------|
-| v1.0.1 | 17.2.1 ( 2026.2.24 ) | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV1.0.1) |\
-| v1.0.0 | 17.2.1 ( 2026.2.24 ) | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV1.0.0) |
+| v2.1.1 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.1.1) |
+| v2.1.0 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.1.0) |
+| v2.0.1 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.0.1) |
+| v2.0.0 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.0.0) |
+| v1.0.1 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV1.0.1) |\
+| v1.0.0 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV1.0.0) |
 
 
 # ⬇️ Installation
 
 ## 🪟 Windows
 
-1. Download the latest **MalumMenu zip pack** from [here](https://github.com/ADHyperActive/MalumMenu/releases/latest).
-    - **For Steam or Itch.io:** Download `MalumMenu-VERSION-Steam-Itch.zip`.
+1. Download the latest **HyperMenu zip pack** from [here](https://github.com/ADHyperActive/MalumMenu/releases/latest).
+    - **For Steam or Itch.io:** Download `HyperMenu-VERSION-Steam-Itch.zip`.
     - **For Microsoft Store, Epic Games Store, or Xbox App:** Not supported by HyperMenu. For these platforms, go to the original MalumMenu [here](https://github.com/scp222thj/MalumMenu/releases/latest).
 
 2. Open the zip file you have just downloaded and copy all its contents.
@@ -72,7 +76,7 @@
 
 5. Wait for the console window to finish the installation.
 
-6. After installation, Among Us will automatically open with MalumMenu successfully installed.
+6. After installation, Among Us will automatically open with HyperMenu successfully installed.
     - By default, you can toggle the cheat GUI on by pressing **DELETE** on your keyboard.
 
 7. If the installation doesn't work, check out our [FAQ](#-faq).
@@ -84,7 +88,7 @@
 
    - Test different Proton versions if you're having issues launching the game.
 
-2. Set up **BepInEx** (the framework MalumMenu is built upon).
+2. Set up **BepInEx** (the framework HyperMenu is built upon).
    - Follow the official Proton / Wine setup guide found [here](https://docs.bepinex.dev/articles/advanced/proton_wine.html).
    - If you are using Proton with Steam, specify the DLL override:
      - **In Steam:** Right-click Among Us in your Library → Click `Properties` → Click `General` → Click `Launch Options`.
