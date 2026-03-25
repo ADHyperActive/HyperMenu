@@ -23,13 +23,14 @@ public class MenuUI : MonoBehaviour
     // Config input fields
     private Vector2 configScrollPosition = Vector2.zero;
     private Vector2 contentScrollPosition = Vector2.zero;
+    private string colorInputBuffer = null;
 
     // Keybind popup state
     private bool showKeybindPopup = false;
     private string keybindTargetToggle = "";
     private string keybindTargetLabel = "";
     private bool waitingForKey = false;
-    private Rect keybindPopupRect = new(200, 200, 300, 150);
+    private Rect keybindPopupRect = new(200, 200, 300, 130);
 
     // Platform spoofing options
     private readonly string[] platformOptions = new string[] 
@@ -351,7 +352,7 @@ public class MenuUI : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyDown(Utils.StringToKeycode(MalumMenu.menuKeybind.Value)))
+        if (!waitingForKey && Input.GetKeyDown(Utils.StringToKeycode(MalumMenu.menuKeybind.Value)))
         {
             // Enable or disable GUI with DELETE key
             isGUIActive = !isGUIActive;
@@ -426,7 +427,12 @@ public class MenuUI : MonoBehaviour
 
         UIHelpers.ApplyUIColor();
 
-        windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)WindowFunction, "HyperMenuV" + MalumMenu.hyperVersion + ", forked from MalumMenu V" + MalumMenu.malumVersion, windowStyle);
+        windowRect = GUI.Window(0, windowRect, (GUI.WindowFunction)WindowFunction, "HyperMenu v" + MalumMenu.hyperVersion, windowStyle);
+
+        if (showKeybindPopup)
+        {
+            keybindPopupRect = GUI.Window(10, keybindPopupRect, (GUI.WindowFunction)KeybindPopupWindow, "Change Menu Keybind");
+        }
     }
 
     public void WindowFunction(int windowID)
@@ -469,6 +475,52 @@ public class MenuUI : MonoBehaviour
         GUILayout.EndHorizontal();
 
         // Make the window draggable
+        GUI.DragWindow();
+    }
+
+    private static readonly System.Collections.Generic.HashSet<KeyCode> _modifierKeys = new()
+    {
+        KeyCode.LeftShift, KeyCode.RightShift,
+        KeyCode.LeftControl, KeyCode.RightControl,
+        KeyCode.LeftAlt, KeyCode.RightAlt,
+        KeyCode.LeftCommand, KeyCode.RightCommand,
+        KeyCode.LeftMeta, KeyCode.RightMeta,
+        KeyCode.CapsLock, KeyCode.Numlock
+    };
+
+    private void KeybindPopupWindow(int windowID)
+    {
+        GUILayout.Space(8);
+
+        if (waitingForKey)
+        {
+            GUILayout.Label("Press any key to bind...\n(Escape to cancel)");
+
+            var e = Event.current;
+            if (e.type == EventType.KeyDown && e.keyCode != KeyCode.None && !_modifierKeys.Contains(e.keyCode))
+            {
+                if (e.keyCode == KeyCode.Escape)
+                {
+                    waitingForKey = false;
+                    showKeybindPopup = false;
+                }
+                else
+                {
+                    MalumMenu.menuKeybind.Value = e.keyCode.ToString();
+                    waitingForKey = false;
+                    showKeybindPopup = false;
+                }
+                e.Use();
+            }
+        }
+        else
+        {
+            GUILayout.Label("Keybind set to: " + MalumMenu.menuKeybind.Value);
+            GUILayout.Space(8);
+            if (GUILayout.Button("Close"))
+                showKeybindPopup = false;
+        }
+
         GUI.DragWindow();
     }
 
@@ -628,14 +680,41 @@ public class MenuUI : MonoBehaviour
         }
 
         GUILayout.Space(10);
-        GUILayout.Label("Current Menu Color: " + (string.IsNullOrEmpty(MalumMenu.menuHtmlColor.Value) ? "(default)" : MalumMenu.menuHtmlColor.Value));
+        GUILayout.Label("Menu Color (HTML hex):");
+        colorInputBuffer ??= MalumMenu.menuHtmlColor.Value ?? "";
+        GUILayout.BeginHorizontal();
+        colorInputBuffer = GUILayout.TextField(colorInputBuffer, GUIStylePreset.ModernTextField, GUILayout.Width(130));
+        if (GUILayout.Button("Apply", GUILayout.Width(55)))
+        {
+            var trimmed = colorInputBuffer.Trim();
+            if (string.IsNullOrEmpty(trimmed)
+                || ColorUtility.TryParseHtmlString(trimmed, out _)
+                || ColorUtility.TryParseHtmlString("#" + trimmed, out _))
+            {
+                MalumMenu.menuHtmlColor.Value = trimmed;
+            }
+        }
+        if (GUILayout.Button("Clear", GUILayout.Width(50)))
+        {
+            colorInputBuffer = "";
+            MalumMenu.menuHtmlColor.Value = "";
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Label("Applied: " + (string.IsNullOrEmpty(MalumMenu.menuHtmlColor.Value) ? "(default)" : MalumMenu.menuHtmlColor.Value));
 
         GUILayout.Space(15);
         GUILayout.Label("Menu Settings", tabSubtitleStyle);
         GUILayout.Box("", GUIStylePreset.Separator, GUILayout.Height(1f), GUILayout.Width(windowRect.width * 0.35f));
         GUILayout.Space(5);
 
-        GUILayout.Label("Current Keybind: " + MalumMenu.menuKeybind.Value);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Menu Keybind: " + MalumMenu.menuKeybind.Value, GUILayout.Width(200));
+        if (GUILayout.Button("Change", GUILayout.Width(70)))
+        {
+            showKeybindPopup = true;
+            waitingForKey = true;
+        }
+        GUILayout.EndHorizontal();
 
         GUILayout.Space(10);
         var currentOpenOnMouse = MalumMenu.menuOpenOnMouse.Value;
