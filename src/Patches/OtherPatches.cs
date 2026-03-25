@@ -83,15 +83,15 @@ public static class VersionShower_Start
     // Postfix patch of VersionShower.Start to show MalumMenu version
     public static void Postfix(VersionShower __instance)
     {
-        if (CheatToggles.stealthMode) return;
+        if (MalumMenu.inStealthMode || MalumMenu.isPanicked) return;
 
         if (MalumMenu.supportedAU.Contains(Application.version)) // Checks if Among Us version is supported
         {
-            __instance.text.text =  $"MalumMenu v{MalumMenu.malumVersion} (v{Application.version})"; // Supported
+            __instance.text.text =  $"HyperMenu by Simon McLaurin, V{MalumMenu.hyperVersion} (v{Application.version})"; // Supported
         }
         else
         {
-            __instance.text.text =  $"MalumMenu v{MalumMenu.malumVersion} (<color=red>v{Application.version}</color>)"; // Unsupported
+            __instance.text.text =  $"HyperMenu V{MalumMenu.hyperVersion} (<color=red>v{Application.version}</color>)"; // Unsupported
         }
     }
 }
@@ -102,7 +102,7 @@ public static class PingTracker_Update
     // Postfix patch of PingTracker.Update to show MalumMenu authors and colored ping text
     public static void Postfix(PingTracker __instance)
     {
-        if (CheatToggles.stealthMode)
+        if (MalumMenu.inStealthMode)
         {
             __instance.text.alignment = TMPro.TextAlignmentOptions.TopLeft;
 

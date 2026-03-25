@@ -71,9 +71,11 @@ public static class TextBoxTMP_IsCharAllowed
         // Get character that is currently being checked by keeping track
         // of each TextBoxTMP.IsCharAllowed call made within the foreach loop
 
+        _currentCharPos = Mathf.Clamp(_currentCharPos, 0, text.Length - 1);
+
         char currentChar = text[_currentCharPos];
 
-        if (_currentCharPos == text.Length - 1)
+        if (_currentCharPos >= text.Length - 1)
         {
             _currentCharPos = 0; // Reset position when loop finishes
         }

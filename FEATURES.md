@@ -1,4 +1,4 @@
-# 📋 Features
+# 📋 Features (MalumMenu)
 
 ## 👱 Player
 
@@ -177,3 +177,7 @@ You can change all of the following settings in `BepInEx/config/MalumMenu.cfg`
 
 - MalumMenu has a simple **GUI** that is easy to navigate and can be toggled using the **DELETE** key on your keyboard
 - [**TEMPORARILY BROKEN**] MalumMenu comes with **custom announcements** that it will automatically fetch online at launch.
+
+# HyperMenu Changes
+- HyperMenu has a modernized version of the GUI
+- HyperMenu allows changes of config file settings within the GUI rather than having to change the settings and restart Among Us.
