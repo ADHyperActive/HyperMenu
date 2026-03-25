@@ -7,6 +7,10 @@
 * This menu is forked from the original MalumMenu. All credit goes to scp222thj.
   * To access the original, click [here](https://github.com/scp222thj/MalumMenu) or go to https://github.com/scp222thj/MalumMenu
 ---
+## Our Discord:
+https://discord.gg/HbrTNZBQk
+## OG MalumMenu Discord:
+https://discord.gg/GZKcdkFD5
 
 <p align="center">
   <a href="https://discord.gg/HbrTNZBQk">
