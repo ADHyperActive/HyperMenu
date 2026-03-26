@@ -45,10 +45,10 @@ public class MenuUI : MonoBehaviour
     // Create all groups (buttons) and their toggles on start
     private void Start()
     {
-        groups.Add(new GroupInfo("Player", false,
+        groups.Add(new GroupInfo("Movement", false,
             new List<ToggleInfo>() {
                 new ToggleInfo(" NoClip", () => CheatToggles.noClip, x => CheatToggles.noClip = x),
-                new ToggleInfo(" Fake Revive", () => CheatToggles.fakeRevive, x => CheatToggles.fakeRevive = x),
+                //new ToggleInfo(" Fake Revive", () => CheatToggles.fakeRevive, x => CheatToggles.fakeRevive = x),
                 new ToggleInfo(" Invert Controls", () => CheatToggles.invertControls, x => CheatToggles.invertControls = x)
             },
             new List<SubmenuInfo> {
@@ -63,13 +63,13 @@ public class MenuUI : MonoBehaviour
 
         groups.Add(new GroupInfo("ESP", false,
             new List<ToggleInfo>() {
-                new ToggleInfo(" Show Player Info", () => CheatToggles.showPlayerInfo, x => CheatToggles.showPlayerInfo = x),
+                new ToggleInfo(" See Player Info", () => CheatToggles.showPlayerInfo, x => CheatToggles.showPlayerInfo = x),
                 new ToggleInfo(" See Roles", () => CheatToggles.seeRoles, x => CheatToggles.seeRoles = x),
                 new ToggleInfo(" See Ghosts", () => CheatToggles.seeGhosts, x => CheatToggles.seeGhosts = x),
                 new ToggleInfo(" No Shadows", () => CheatToggles.fullBright, x => CheatToggles.fullBright = x),
                 new ToggleInfo(" Task Arrows", () => CheatToggles.taskArrows, x => CheatToggles.taskArrows = x),
                 new ToggleInfo(" Reveal Votes", () => CheatToggles.revealVotes, x => CheatToggles.revealVotes = x),
-                new ToggleInfo(" Show Lobby Info", () => CheatToggles.showLobbyInfo, x => CheatToggles.showLobbyInfo = x),
+                new ToggleInfo(" See Lobby Info", () => CheatToggles.showLobbyInfo, x => CheatToggles.showLobbyInfo = x),
             },
             new List<SubmenuInfo> {
                 new SubmenuInfo("Camera", false,
@@ -201,6 +201,24 @@ public class MenuUI : MonoBehaviour
             }
         ));
 
+        groups.Add(new GroupInfo("Animations", false,
+            new List<ToggleInfo>() {
+                new ToggleInfo(" Shields", () => CheatToggles.animShields, x => CheatToggles.animShields = x),
+                new ToggleInfo(" Asteroids", () => CheatToggles.animAsteroids, x => CheatToggles.animAsteroids = x),
+                new ToggleInfo(" Empty Garbage", () => CheatToggles.animEmptyGarbage, x => CheatToggles.animEmptyGarbage = x),
+                new ToggleInfo(" Medbay Scan", () => CheatToggles.animScan, x => CheatToggles.animScan = x),
+                new ToggleInfo(" Cams In Use", () => CheatToggles.animCamsInUse, x => CheatToggles.animCamsInUse = x),
+                //new ToggleInfo(" Pet", () => CheatToggles.animPet, x => CheatToggles.animPet = x)
+            },
+            new List<SubmenuInfo>() {
+                new SubmenuInfo("Client-Sided", false,
+                    new List<ToggleInfo>() {
+                        new ToggleInfo(" Moonwalk", () => CheatToggles.moonWalk, x => CheatToggles.moonWalk = x)
+                    }
+                )
+            }
+        ));
+
         groups.Add(new GroupInfo("Console", false,
             new List<ToggleInfo>() {
                 new ToggleInfo(" Show Console", () => CheatToggles.showConsole, x => CheatToggles.showConsole = x),
@@ -228,7 +246,8 @@ public class MenuUI : MonoBehaviour
                         new ToggleInfo(" Kill All Crewmates", () => CheatToggles.killAllCrew, x => CheatToggles.killAllCrew = x),
                         new ToggleInfo(" Kill All Impostors", () => CheatToggles.killAllImps, x => CheatToggles.killAllImps = x),
                         new ToggleInfo(" Kill Everyone", () => CheatToggles.killAll, x => CheatToggles.killAll = x)
-                    }),
+                    }
+                ),
                 new SubmenuInfo("Game State", false,
                     new List<ToggleInfo>() {
                         new ToggleInfo(" Force Start Game", () => CheatToggles.forceStartGame, x => CheatToggles.forceStartGame = x),
@@ -256,24 +275,6 @@ public class MenuUI : MonoBehaviour
                 new ToggleInfo(" Panic (Disable MalumMenu)", () => CheatToggles.panic, x => CheatToggles.panic = x)
             },
             new List<SubmenuInfo>()
-        ));
-
-        groups.Add(new GroupInfo("Animations", false,
-            new List<ToggleInfo>() {
-                new ToggleInfo(" Shields", () => CheatToggles.animShields, x => CheatToggles.animShields = x),
-                new ToggleInfo(" Asteroids", () => CheatToggles.animAsteroids, x => CheatToggles.animAsteroids = x),
-                new ToggleInfo(" Empty Garbage", () => CheatToggles.animEmptyGarbage, x => CheatToggles.animEmptyGarbage = x),
-                new ToggleInfo(" Medbay Scan", () => CheatToggles.animScan, x => CheatToggles.animScan = x),
-                new ToggleInfo(" Cams In Use", () => CheatToggles.animCamsInUse, x => CheatToggles.animCamsInUse = x),
-                //new ToggleInfo(" Pet", () => CheatToggles.animPet, x => CheatToggles.animPet = x)
-            },
-            new List<SubmenuInfo>() {
-                new SubmenuInfo("Client-Sided", false,
-                    new List<ToggleInfo>() {
-                        new ToggleInfo(" Moonwalk", () => CheatToggles.moonWalk, x => CheatToggles.moonWalk = x)
-                    }
-                )
-            }
         ));
 
         groups.Add(new GroupInfo("Config", false,
@@ -477,7 +478,7 @@ public class MenuUI : MonoBehaviour
     {
         return groups[groupId].name switch
         {
-            "Player" => 1,
+            "Movement" => 1,
             "ESP" => 1,
             "Roles" => 4,
             "Ship" => 1,
@@ -518,7 +519,7 @@ public class MenuUI : MonoBehaviour
             needSpace = true;
         }
 
-        if (group.name == "Player")
+        if (group.name == "Movement")
         {
             try
             {
