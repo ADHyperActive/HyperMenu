@@ -448,7 +448,15 @@ public static class Utils
         var level = playerInfo.PlayerLevel + 1;
 
         var platform = "Unknown";
-        try { platform = PlatformTypeToString(player.PlatformData.Platform); } catch { }
+
+        if (playerInfo.Object.AmOwner && StringToPlatformType(MalumMenu.spoofPlatform.Value, out Platforms? platformType))
+        {
+            try { platform = PlatformTypeToString((Platforms)platformType); } catch { }
+        }
+        else
+        {
+            try { platform = PlatformTypeToString(player.PlatformData.Platform); } catch { }
+        }
 
         //var puid = player.ProductUserId;
         //var friendcode = player.FriendCode;
