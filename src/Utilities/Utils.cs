@@ -451,7 +451,7 @@ public static class Utils
 
         if (playerInfo.Object.AmOwner && StringToPlatformType(MalumMenu.spoofPlatform.Value, out Platforms? platformType))
         {
-            try { platform = PlatformTypeToString((Platforms)platformType); } catch { }
+            platform = PlatformTypeToString((Platforms)platformType);
         }
         else
         {
