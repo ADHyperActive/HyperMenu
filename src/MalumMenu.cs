@@ -27,7 +27,7 @@ public partial class MalumMenu : BasePlugin
     public static ProtectUI protectUI;
     public static CheatToggles.KeybindListener keybindListener;
 
-    public static string hyperVersion = "DB3.0.4";
+    public static string hyperVersion = "H3.0.4";
     public static string malumVersion = "3.0.2+";
     public static List<string> supportedAU = new List<string> { "2026.2.24", "2026.3.17" };
     public static bool isPanicked = false;
