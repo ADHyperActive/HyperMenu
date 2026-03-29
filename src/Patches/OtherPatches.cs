@@ -9,15 +9,20 @@ using InnerNet;
 
 namespace MalumMenu;
 
-[HarmonyPatch(typeof(PlatformSpecificData), nameof(PlatformSpecificData.Serialize))]
-public static class PlatformSpecificData_Serialize
+[HarmonyPatch(typeof(Constants), nameof(Constants.GetPlatformData))]
+public static class Constants_GetPlatformData
 {
-    // Prefix patch of Constants.GetPlatformType to spoof the user's platform type
-    public static void Prefix(PlatformSpecificData __instance)
+    // Postfix patch of Constants.GetPlatformData to spoof the user's platform type
+    public static void Postfix(ref PlatformSpecificData __result)
     {
-
-        MalumSpoof.SpoofPlatform(__instance);
-
+        if (Utils.StringToPlatformType(MalumMenu.spoofPlatform.Value, out Platforms? platformType))
+        {
+            __result = new PlatformSpecificData
+            {
+                Platform = (Platforms)platformType,
+                PlatformName = Constants.GetPlatformName()
+            };
+        }
     }
 }
 

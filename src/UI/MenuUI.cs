@@ -271,8 +271,15 @@ public class MenuUI : MonoBehaviour
                 new ToggleInfo(" Unlock Extra Features", () => CheatToggles.unlockFeatures, x => CheatToggles.unlockFeatures = x),
                 new ToggleInfo(" Copy Lobby Code on Disconnect", () => CheatToggles.copyLobbyCodeOnDisconnect, x => CheatToggles.copyLobbyCodeOnDisconnect = x),
                 new ToggleInfo(" Spoof Date to April 1st", () => CheatToggles.spoofAprilFoolsDate, x => CheatToggles.spoofAprilFoolsDate = x),
+            },
+            new List<SubmenuInfo>()
+        ));
+
+        groups.Add(new GroupInfo("Modes", false,
+            new List<ToggleInfo>() {
+                new ToggleInfo(" Party Mode", () => CheatToggles.rgbMode, x => CheatToggles.rgbMode = x),
                 new ToggleInfo(" Stealth Mode", () => CheatToggles.stealthMode, x => CheatToggles.stealthMode = x),
-                new ToggleInfo(" Panic (Disable MalumMenu)", () => CheatToggles.panic, x => CheatToggles.panic = x)
+                new ToggleInfo(" Panic Mode", () => CheatToggles.panic, x => CheatToggles.panic = x)
             },
             new List<SubmenuInfo>()
         ));
@@ -439,9 +446,18 @@ public class MenuUI : MonoBehaviour
         GUILayout.Space(5);
         for (var i = 0; i < groups.Count; i++)
         {
-            var style = (i == selectedTab) ? tabButtonActiveStyle : tabButtonStyle;
-            if (GUILayout.Button(groups[i].name, style, GUILayout.Height(38)))
+            Color standardColor = GUI.backgroundColor;
+
+            if (selectedTab == i)
+            {
+                GUI.backgroundColor = new Color(0.2f, 0.2f, 0.2f);
+            }
+
+            if (GUILayout.Button(groups[i].name, tabButtonStyle, GUILayout.Height(35)))
                 selectedTab = i;
+
+            GUI.backgroundColor = standardColor;
+
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
@@ -487,6 +503,7 @@ public class MenuUI : MonoBehaviour
             "Host-Only" => 2,
             "Passive" => 1,
             "Animations" => 1,
+            "Modes" => 1,
             "Config" => 1,
             _ => 2
         };

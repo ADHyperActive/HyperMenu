@@ -26,13 +26,4 @@ public static class MalumSpoof
         }
         return friendCode;
     }
-
-    public static void SpoofPlatform(PlatformSpecificData platformSpecificData)
-    {
-        // Parse Spoofing.Platform config entry and save it as the spoofed platform type
-        if (Utils.StringToPlatformType(MalumMenu.spoofPlatform.Value, out Platforms? platformType))
-        {
-            platformSpecificData.Platform = (Platforms)platformType;
-        }
-    }
 }

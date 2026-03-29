@@ -9,7 +9,7 @@ public class ConsoleUI : MonoBehaviour
     private static Vector2 _scrollPosition = Vector2.zero;
     private static List<string> _logEntries = new();
     private const int MaxLogEntries = 300;
-    private Rect _windowRect = new(320, 10, 500, 300);
+    private Rect _windowRect = new(320, 10, 550, 350);
     private GUIStyle _logStyle;
 
     public static void Log(string message)
