@@ -352,9 +352,9 @@ public static class Utils
     {
         return ping switch
         {
-            <= 100 => $"<color=#00ff00ff>PING: {ping} ms</color>", // Green for ping < 100
-            < 400 => $"<color=#ffff00ff>PING: {ping} ms</color>", // Yellow for 100 < ping < 400
-            _ => $"<color=#ff0000ff>PING: {ping} ms</color>" // Red for ping > 400
+            <= 100 => $"<color=#00ff00ff>PING: {ping} ms</color>", // Green for ping < 101 ms
+            <= 220 => $"<color=#ffff00ff>PING: {ping} ms</color>", // Yellow for ping 101-220 ms
+            _ => $"<color=#ff0000ff>PING: {ping} ms</color>" // Red for ping > 220 ms
         };
     }
 
