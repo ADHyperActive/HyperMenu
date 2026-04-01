@@ -8,8 +8,6 @@ public class ChatTab : ITab
 
     public void Draw()
     {
-        GUILayout.BeginHorizontal();
-
         GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.425f));
 
         DrawGeneral();
@@ -19,8 +17,6 @@ public class ChatTab : ITab
         DrawTextbox();
 
         GUILayout.EndVertical();
-
-        GUILayout.EndHorizontal();
     }
 
     private void DrawGeneral()

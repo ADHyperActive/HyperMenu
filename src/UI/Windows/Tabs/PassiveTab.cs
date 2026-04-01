@@ -8,15 +8,11 @@ public class PassiveTab : ITab
 
     public void Draw()
     {
-        GUILayout.BeginHorizontal();
-
         GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.425f));
 
         DrawGeneral();
 
         GUILayout.EndVertical();
-
-        GUILayout.EndHorizontal();
     }
 
     private void DrawGeneral()
