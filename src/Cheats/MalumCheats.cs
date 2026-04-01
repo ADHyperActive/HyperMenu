@@ -85,7 +85,7 @@ public static class MalumCheats
 
     public static void NoKillCdCheat(PlayerControl playerControl)
     {
-        if (CheatToggles.zeroKillCd && playerControl.killTimer > 0f)
+        if (CheatToggles.noKillCd && playerControl.killTimer > 0f)
         {
             playerControl.SetKillTimer(0f);
         }
@@ -214,7 +214,7 @@ public static class MalumCheats
 
 			if (!PlayerControl.LocalPlayer.Data.Role.CanVent && !PlayerControl.LocalPlayer.Data.IsDead)
             {
-				hudManager.ImpostorVentButton.gameObject.SetActive(CheatToggles.useVents);
+				hudManager.ImpostorVentButton.gameObject.SetActive(CheatToggles.unlockVents);
 			}
 
         } catch { }
@@ -224,7 +224,7 @@ public static class MalumCheats
     {
         try
         {
-            if (!CheatToggles.walkVent) return;
+            if (!CheatToggles.walkInVents) return;
 
             PlayerControl.LocalPlayer.inVent = false;
             PlayerControl.LocalPlayer.moveable = true;
@@ -326,6 +326,7 @@ public static class MalumCheats
 
     public static void TeleportCursorCheat()
     {
+        if (PlayerControl.LocalPlayer?.NetTransform == null || Camera.main == null) return;
         if (!CheatToggles.teleportCursor) return;
 
         // Teleport player to cursor's in-world position on right-click
@@ -355,12 +356,12 @@ public static class MalumCheats
 
     public static void PlayScannerCheat()
     {
-        if (CheatToggles.animScan && !_isScanAnimActive)
+        if (CheatToggles.animMedScan && !_isScanAnimActive)
         {
             Utils.ForceSetScanner(PlayerControl.LocalPlayer, true);
             _isScanAnimActive = true;
         }
-        else if (!CheatToggles.animScan && _isScanAnimActive)
+        else if (!CheatToggles.animMedScan && _isScanAnimActive)
         {
             Utils.ForceSetScanner(PlayerControl.LocalPlayer, false);
             _isScanAnimActive = false;
@@ -369,7 +370,20 @@ public static class MalumCheats
 
     public static void PlayAnimationCheat()
     {
-        var map = (MapNames)Utils.GetCurrentMapID();
+        if (CheatToggles.animPet && Utils.isPlayer && PlayerControl.LocalPlayer.cosmetics != null && PlayerControl.LocalPlayer.cosmetics.CurrentPet != null)
+        {
+            // Don't move LocalPlayer, just send the RPC so others see the petting animation
+            RpcPetMessage rpcMessage = new(PlayerControl.LocalPlayer.MyPhysics.NetId,
+                PlayerControl.LocalPlayer.cosmetics.CurrentPet.PettingPlayerPosition,
+                PlayerControl.LocalPlayer.cosmetics.CurrentPet.transform.position);
+            AmongUsClient.Instance.LateBroadcastReliableMessage(Unsafe.As<IGameDataMessage>(rpcMessage));
+        }
+
+        byte mapId = Utils.GetCurrentMapID();
+
+        if (mapId == 255) return;
+
+        var map = (MapNames)mapId;
 
         if (CheatToggles.animShields)
         {
@@ -402,34 +416,30 @@ public static class MalumCheats
             CheatToggles.animEmptyGarbage = false;
         }
 
-        if (CheatToggles.animCamsInUse && !_isCamsAnimActive)
+        if (!(map is MapNames.MiraHQ or MapNames.Fungle))
         {
-            // There is no cameras on Mira HQ and Fungle
-            if (map is MapNames.MiraHQ or MapNames.Fungle)
-            {
-                CheatToggles.animCamsInUse = false;
-            }
-            else
+            if (CheatToggles.animCamsInUse && !_isCamsAnimActive)
             {
                 // ShipStatus.Instance.UpdateSystem(SystemTypes.Security, PlayerControl.LocalPlayer, (byte)(CheatToggles.animCamsInUse ? 1 : 0));
                 ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Security, 1);
                 _isCamsAnimActive = true;
             }
+            else if (!CheatToggles.animCamsInUse && _isCamsAnimActive)
+            {
+                // Turn off cams if the cheat was used before and is now disabled
+                ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Security, 0);
+                _isCamsAnimActive = false;
+            }
         }
-        else if (!CheatToggles.animCamsInUse && _isCamsAnimActive)
+        else
         {
-            // Turn off cams if the cheat was used before and is now disabled
-            ShipStatus.Instance.RpcUpdateSystem(SystemTypes.Security, 0);
-            _isCamsAnimActive = false;
+            CheatToggles.animCamsInUse = false;
         }
+    }
 
-        if (CheatToggles.animPet && Utils.isPlayer && PlayerControl.LocalPlayer.cosmetics != null && PlayerControl.LocalPlayer.cosmetics.CurrentPet != null)
-        {
-            // Don't move LocalPlayer, just send the RPC so others see the petting animation
-            RpcPetMessage rpcMessage = new(PlayerControl.LocalPlayer.MyPhysics.NetId,
-                PlayerControl.LocalPlayer.cosmetics.CurrentPet.PettingPlayerPosition,
-                PlayerControl.LocalPlayer.cosmetics.CurrentPet.transform.position);
-            AmongUsClient.Instance.LateBroadcastReliableMessage(Unsafe.As<IGameDataMessage>(rpcMessage));
-        }
+    public static void StopAllAnimationsCheats()
+    {
+        _isCamsAnimActive = false;
+        _isScanAnimActive = false;
     }
 }

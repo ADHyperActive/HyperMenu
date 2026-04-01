@@ -43,12 +43,12 @@ public static class ShapeshifterMinigame_Begin
                 shapeshifterPanel.NameText.text = Utils.GetNameTag(playerData, playerData.DefaultOutfit.PlayerName);
 
                 // Move and resize the nametag to prevent it overlapping with colorblind text
-                if (CheatToggles.seeRoles && CheatToggles.showPlayerInfo)
+                if (CheatToggles.seeRoles && CheatToggles.seePlayerInfo)
                 {
                     shapeshifterPanel.NameText.transform.localPosition = new Vector3(0.33f, 0.08f, 0f);
                     shapeshifterPanel.NameText.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 }
-                else if (CheatToggles.seeRoles || CheatToggles.showPlayerInfo)
+                else if (CheatToggles.seeRoles || CheatToggles.seePlayerInfo)
                 {
                     shapeshifterPanel.NameText.transform.localPosition = new Vector3(0.3384f, 0.1125f, -0.1f);
                     shapeshifterPanel.NameText.transform.localScale = new Vector3(0.9f, 1f, 1f);

@@ -239,7 +239,7 @@ public static class MalumPPMCheats
 
     public static void ChangeRolePPM()
     {
-        if (CheatToggles.changeRole)
+        if (CheatToggles.setFakeRole)
         {
 
             if (!_changeRoleActive)
@@ -335,7 +335,7 @@ public static class MalumPPMCheats
             // Deactivate cheat if menu is closed
             if (PlayerPickMenu.playerpickMenu == null)
             {
-                CheatToggles.changeRole = false;
+                CheatToggles.setFakeRole = false;
             }
 
         }

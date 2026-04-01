@@ -9,7 +9,7 @@ public class ConsoleUI : MonoBehaviour
     private static Vector2 _scrollPosition = Vector2.zero;
     private static List<string> _logEntries = new();
     private const int MaxLogEntries = 300;
-    private Rect _windowRect = new(320, 10, 500, 300);
+    private Rect _windowRect = new(320, 10, 550, 350);
     private GUIStyle _logStyle;
 
     public static void Log(string message)
@@ -36,14 +36,14 @@ public class ConsoleUI : MonoBehaviour
 
         UIHelpers.ApplyUIColor();
 
-        _windowRect = GUI.Window(1, _windowRect, (GUI.WindowFunction)ConsoleWindow, "Console");
+        _windowRect = GUI.Window((int)WindowId.ConsoleUI, _windowRect, (GUI.WindowFunction)ConsoleWindow, "Console");
     }
 
     private void ConsoleWindow(int windowID)
     {
-        GUILayout.BeginVertical();
+        GUILayout.BeginVertical(GUI.skin.box);
 
-        _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, false, true);
+        _scrollPosition = GUILayout.BeginScrollView(_scrollPosition, false, false);
 
         foreach (var log in _logEntries)
         {
@@ -51,6 +51,8 @@ public class ConsoleUI : MonoBehaviour
         }
 
         GUILayout.EndScrollView();
+
+        GUILayout.EndVertical();
 
         GUILayout.BeginHorizontal();
 
@@ -65,8 +67,6 @@ public class ConsoleUI : MonoBehaviour
         }
 
         GUILayout.EndHorizontal();
-
-        GUILayout.EndVertical();
 
         GUI.DragWindow();
     }

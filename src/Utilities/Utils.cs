@@ -265,7 +265,7 @@ public static class Utils
     {
         try
         {
-            return CheatToggles.alwaysChat || MeetingHud.Instance || !ShipStatus.Instance || PlayerControl.LocalPlayer.Data.IsDead;
+            return CheatToggles.enableChat || MeetingHud.Instance || !ShipStatus.Instance || PlayerControl.LocalPlayer.Data.IsDead;
         }
         catch
         {
@@ -324,14 +324,21 @@ public static class Utils
     // Gets current map ID
     public static byte GetCurrentMapID()
     {
-        // If playing the tutorial
-        if (isFreePlay)
+        try
         {
-            return (byte)AmongUsClient.Instance.TutorialMapId;
-        }
+            // If playing the tutorial
+            if (isFreePlay)
+            {
+                return (byte)AmongUsClient.Instance.TutorialMapId;
+            }
 
-        // Works for local/online games
-        return GameOptionsManager.Instance.currentGameOptions.MapId;
+            // Works for local/online games
+            return GameOptionsManager.Instance.currentGameOptions.MapId;
+        }
+        catch
+        {
+            return 255;
+        }
     }
 
     // Gets SystemType of the room the player is currently in
@@ -448,7 +455,7 @@ public static class Utils
         var level = playerInfo.PlayerLevel + 1;
 
         var platform = "Unknown";
-        try { platform = PlatformTypeToString(player.PlatformData.Platform); } catch { }
+        if (!isLocalGame) try { platform = PlatformTypeToString(player.PlatformData.Platform); } catch { }
 
         //var puid = player.ProductUserId;
         //var friendcode = player.FriendCode;
@@ -460,7 +467,7 @@ public static class Utils
         if (CheatToggles.seeRoles)
         {
 
-            if (CheatToggles.showPlayerInfo)
+            if (CheatToggles.seePlayerInfo)
             {
                 if (isChat)
                 {
@@ -484,7 +491,7 @@ public static class Utils
         }
         else
         {
-            if (CheatToggles.showPlayerInfo)
+            if (CheatToggles.seePlayerInfo)
             {
                 if (PlayerControl.LocalPlayer.Data.Role.NameColor == playerInfo.Role.NameColor)
                 {

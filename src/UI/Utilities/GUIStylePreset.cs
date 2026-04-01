@@ -7,6 +7,9 @@ public static class GUIStylePreset
     private static GUIStyle _separator;
     private static GUIStyle _normalButton;
     private static GUIStyle _normalToggle;
+    private static GUIStyle _tabButton;
+    private static GUIStyle _tabTitle;
+    private static GUIStyle _tabSubtitle;
 
     public static GUIStyle Separator
     {
@@ -56,6 +59,59 @@ public static class GUIStylePreset
             }
 
             return _normalToggle;
+        }
+    }
+
+    public static GUIStyle TabButton
+    {
+        get
+        {
+            if (_tabButton == null)
+            {
+                _tabButton = new GUIStyle(GUI.skin.button)
+                {
+                    fontSize = 17,
+                    fontStyle = FontStyle.Bold,
+                };
+            }
+
+            return _tabButton;
+        }
+    }
+
+    public static GUIStyle TabTitle
+    {
+        get
+        {
+            if (_tabTitle == null)
+            {
+                _tabTitle = new GUIStyle(GUI.skin.label)
+                {
+                    fontSize = 20,
+                    fontStyle = FontStyle.Bold,
+                    alignment = TextAnchor.MiddleLeft,
+                };
+            }
+
+            return _tabTitle;
+        }
+    }
+
+    public static GUIStyle TabSubtitle
+    {
+        get
+        {
+            if (_tabSubtitle == null)
+            {
+                _tabSubtitle = new GUIStyle(GUI.skin.label)
+                {
+                    fontSize = 16,
+                    fontStyle = FontStyle.Bold,
+                    alignment = TextAnchor.MiddleLeft,
+                };
+            }
+
+            return _tabSubtitle;
         }
     }
 }

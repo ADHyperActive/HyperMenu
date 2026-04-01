@@ -9,15 +9,20 @@ using InnerNet;
 
 namespace MalumMenu;
 
-[HarmonyPatch(typeof(PlatformSpecificData), nameof(PlatformSpecificData.Serialize))]
-public static class PlatformSpecificData_Serialize
+[HarmonyPatch(typeof(Constants), nameof(Constants.GetPlatformData))]
+public static class Constants_GetPlatformData
 {
-    // Prefix patch of Constants.GetPlatformType to spoof the user's platform type
-    public static void Prefix(PlatformSpecificData __instance)
+    // Postfix patch of Constants.GetPlatformData to spoof the user's platform type
+    public static void Postfix(ref PlatformSpecificData __result)
     {
-
-        MalumSpoof.SpoofPlatform(__instance);
-
+        if (Utils.StringToPlatformType(MalumMenu.spoofPlatform.Value, out Platforms? platformType))
+        {
+            __result = new PlatformSpecificData
+            {
+                Platform = (Platforms)platformType,
+                PlatformName = Constants.GetPlatformName()
+            };
+        }
     }
 }
 
@@ -145,7 +150,7 @@ public static class PlayerBanData_BanMinutesLeft_Getter
     // Postfix patch of PlayerBanData.BanMinutesLeft Getter method to remove disconnect penalty
     public static void Postfix(PlayerBanData __instance, ref int __result)
     {
-        if (!CheatToggles.avoidBans) return;
+        if (!CheatToggles.avoidPenalties) return;
 
         __instance.BanPoints = 0f; // Removes all BanPoints
         __result = 0; // Removes all BanMinutes
@@ -334,7 +339,7 @@ public static class GameContainer_SetupGameInfo
     // host name (e.g. Astral), lobby code (e.g. KLHCEG), host platform (e.g. Epic), and lobby age in minutes (e.g. 4:20)
     public static void Postfix(GameContainer __instance)
     {
-        if (!CheatToggles.showLobbyInfo) return;
+        if (!CheatToggles.seeLobbyInfo) return;
 
         // The Crewmate icon gets aligned properly with this
         const string separator = "<#0000>000000000000000</color>";
