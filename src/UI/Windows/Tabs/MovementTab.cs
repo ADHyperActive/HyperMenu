@@ -22,6 +22,8 @@ public class MovementTab : ITab
 
     private void DrawGeneral()
     {
+        CheatToggles.fakeRevive = GUILayout.Toggle(CheatToggles.fakeRevive, "Fake Revive");
+
         CheatToggles.noClip = GUILayout.Toggle(CheatToggles.noClip, " NoClip");
 
         CheatToggles.invertControls = GUILayout.Toggle(CheatToggles.invertControls, " Invert Controls");

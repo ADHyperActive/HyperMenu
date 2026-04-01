@@ -37,9 +37,13 @@ public class ShipTab : ITab
 
         CheatToggles.callMeeting = GUILayout.Toggle(CheatToggles.callMeeting, " Call Meeting");
 
+        CheatToggles.reportBody = GUILayout.Toggle(CheatToggles.reportBody, "Report Body");
+
         CheatToggles.closeMeeting = GUILayout.Toggle(CheatToggles.closeMeeting, " Close Meeting");
 
         CheatToggles.autoOpenDoorsOnUse = GUILayout.Toggle(CheatToggles.autoOpenDoorsOnUse, " Auto-Open Doors On Use");
+
+        CheatToggles.kickOffensiveNames = GUILayout.Toggle(CheatToggles.kickOffensiveNames, " Kick Offensive Names");
     }
 
     private void DrawSabotage()

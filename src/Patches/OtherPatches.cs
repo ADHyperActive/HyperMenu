@@ -120,12 +120,12 @@ public static class PingTracker_Update
         {
             __instance.aspectPosition.DistanceFromEdge = new Vector3(-0.21f, 0.50f, 0f);
 
-            __instance.text.text = $"MalumMenu by scp222thj & Astral ~ {Utils.GetColoredPingText(AmongUsClient.Instance.Ping)}";
+            __instance.text.text = $"HyperMenu by Simon McLaurin\nMalumMenu by scp222thj & Astral ~ {Utils.GetColoredPingText(AmongUsClient.Instance.Ping)}";
 
             return;
         }
 
-        __instance.text.text = $"MalumMenu by scp222thj & Astral\n{Utils.GetColoredPingText(AmongUsClient.Instance.Ping)}";
+        __instance.text.text = $"HyperMenu by Simon McLaurin\nMalumMenu by scp222thj & Astral\n{Utils.GetColoredPingText(AmongUsClient.Instance.Ping)}";
 
     }
 }
