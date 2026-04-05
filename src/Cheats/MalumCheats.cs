@@ -416,7 +416,7 @@ public static class MalumCheats
             CheatToggles.animEmptyGarbage = false;
         }
 
-        if (!(map is MapNames.MiraHQ or MapNames.Fungle))
+        if (map is not (MapNames.MiraHQ or MapNames.Fungle))
         {
             if (CheatToggles.animCamsInUse && !_isCamsAnimActive)
             {
@@ -437,7 +437,7 @@ public static class MalumCheats
         }
     }
 
-    public static void StopAllAnimationsCheats()
+    public static void StopShipAnimCheats()
     {
         CheatToggles.animShields = false;
         CheatToggles.animAsteroids = false;

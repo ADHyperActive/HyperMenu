@@ -130,7 +130,7 @@ public class MenuUI : MonoBehaviour
             CheatToggles.spamOpenAllDoors = false;
             CheatToggles.mushSpore = false;
 
-            MalumCheats.StopAllAnimationsCheats();
+            MalumCheats.StopShipAnimCheats();
         }
 
         if(!Utils.isHost && !Utils.isFreePlay)
