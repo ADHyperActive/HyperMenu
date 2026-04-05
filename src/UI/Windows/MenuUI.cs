@@ -84,8 +84,8 @@ public class MenuUI : MonoBehaviour
 
         if (CheatToggles.saveProfile)
         {
+            CheatToggles.saveProfile = false; // Disable first to avoid saving it to profile
             CheatToggles.SaveTogglesToProfile();
-            CheatToggles.saveProfile = false;
         }
 
         if (CheatToggles.loadProfile)
