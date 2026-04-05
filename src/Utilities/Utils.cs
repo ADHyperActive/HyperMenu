@@ -152,6 +152,15 @@ public static class Utils
         return RoleManager.Instance.AllRoles.ToArray().First(r => r.Role == roleType);
     }
 
+    // Gets RoleBehaviour from a TeamType
+    public static RoleBehaviour GetBehaviourByTeamType(RoleTeamTypes roleTeamType)
+    {
+        RoleTypes roleType = (RoleTypes)Enum.Parse(typeof(RoleTypes), roleTeamType.ToString(), true);
+        RoleBehaviour role = GetBehaviourByRoleType(roleType);
+
+        return role;
+    }
+
     public static void ForceSetScanner(PlayerControl player, bool toggle)
     {
         var count = ++player.scannerCount;
@@ -429,19 +438,11 @@ public static class Utils
         var translatedRole = DestroyableSingleton<TranslationController>.Instance.GetString(playerData.Role.StringName, Il2CppSystem.Array.Empty<Il2CppSystem.Object>());
         if (translatedRole != "STRMISS") return translatedRole;
 
-        if (playerData.RoleWhenAlive.HasValue)
-        {
-            translatedRole = DestroyableSingleton<TranslationController>.Instance.GetString(GetBehaviourByRoleType(playerData.RoleWhenAlive.Value).StringName, Il2CppSystem.Array.Empty<Il2CppSystem.Object>());
-        }
-        else
-        {
-            translatedRole = "Ghost";
-        }
-
+        translatedRole = DestroyableSingleton<TranslationController>.Instance.GetString(GetBehaviourByTeamType(playerData.Role.TeamType).StringName, Il2CppSystem.Array.Empty<Il2CppSystem.Object>());
         return translatedRole;
     }
 
-    // Gets the appropriate nametag for a player (seeRoles cheat)
+    // Gets the appropriate nametag for a player
     public static string GetNameTag(NetworkedPlayerInfo playerInfo, string playerName, bool isChat = false)
     {
         var nameTag = playerName;
