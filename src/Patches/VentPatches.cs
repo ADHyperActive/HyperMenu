@@ -11,7 +11,7 @@ public static class Vent_CanUse
     {
         if (!PlayerControl.LocalPlayer || !PlayerControl.LocalPlayer.Data) return;
         if (PlayerControl.LocalPlayer.Data.Role.CanVent || PlayerControl.LocalPlayer.Data.IsDead) return;
-        if (!CheatToggles.useVents) return;
+        if (!CheatToggles.unlockVents) return;
 
         var @object = pc.Object;
 

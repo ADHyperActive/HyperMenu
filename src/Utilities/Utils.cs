@@ -28,7 +28,7 @@ public static class Utils
     public static bool isLocalGame => AmongUsClient.Instance && AmongUsClient.Instance.NetworkMode == NetworkModes.LocalGame;
     public static bool isFreePlay => AmongUsClient.Instance && AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay;
     public static bool isPlayer => PlayerControl.LocalPlayer;
-    public static bool isHost => AmongUsClient.Instance && AmongUsClient.Instance.AmHost;
+    public static bool isHost => (AmongUsClient.Instance && AmongUsClient.Instance.AmHost) || CheatToggles.bypassHostOnly;
     public static bool isInGame => AmongUsClient.Instance && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started && isPlayer;
     public static bool isMeeting => MeetingHud.Instance;
     public static bool isMeetingVoting => isMeeting && MeetingHud.Instance.state is MeetingHud.VoteStates.Voted or MeetingHud.VoteStates.NotVoted;
@@ -265,7 +265,7 @@ public static class Utils
     {
         try
         {
-            return CheatToggles.alwaysChat || MeetingHud.Instance || !ShipStatus.Instance || PlayerControl.LocalPlayer.Data.IsDead;
+            return CheatToggles.enableChat || MeetingHud.Instance || !ShipStatus.Instance || PlayerControl.LocalPlayer.Data.IsDead;
         }
         catch
         {
@@ -324,14 +324,21 @@ public static class Utils
     // Gets current map ID
     public static byte GetCurrentMapID()
     {
-        // If playing the tutorial
-        if (isFreePlay)
+        try
         {
-            return (byte)AmongUsClient.Instance.TutorialMapId;
-        }
+            // If playing the tutorial
+            if (isFreePlay)
+            {
+                return (byte)AmongUsClient.Instance.TutorialMapId;
+            }
 
-        // Works for local/online games
-        return GameOptionsManager.Instance.currentGameOptions.MapId;
+            // Works for local/online games
+            return GameOptionsManager.Instance.currentGameOptions.MapId;
+        }
+        catch
+        {
+            return 255;
+        }
     }
 
     // Gets SystemType of the room the player is currently in
@@ -460,7 +467,7 @@ public static class Utils
         if (CheatToggles.seeRoles)
         {
 
-            if (CheatToggles.showPlayerInfo)
+            if (CheatToggles.seePlayerInfo)
             {
                 if (isChat)
                 {
@@ -484,7 +491,7 @@ public static class Utils
         }
         else
         {
-            if (CheatToggles.showPlayerInfo)
+            if (CheatToggles.seePlayerInfo)
             {
                 if (PlayerControl.LocalPlayer.Data.Role.NameColor == playerInfo.Role.NameColor)
                 {

@@ -8,25 +8,16 @@ namespace MalumMenu;
 
 public struct CheatToggles
 {
-    // Player
+    // Movement
     public static bool noClip;
-    public static bool speedBoost;
     public static bool teleportPlayer;
     public static bool teleportCursor;
-    public static bool reportBody;
-    public static bool ejectPlayer;
-    public static bool killPlayer;
-    public static bool telekillPlayer;
-    public static bool killAll;
-    public static bool killAllCrew;
-    public static bool killAllImps;
     public static bool fakeRevive;
     public static bool invertControls;
-    public static bool moonWalk;
 
     // Roles
-    public static bool changeRole;
-    public static bool zeroKillCd;
+    public static bool setFakeRole;
+    public static bool noKillCd;
     public static bool showTasksMenu;
     public static bool completeMyTasks;
     public static bool impostorTasks;
@@ -48,14 +39,14 @@ public struct CheatToggles
     public static bool noShapeshiftAnim;
 
     // ESP
-    public static bool fullBright;
+    public static bool noShadows;
     public static bool seeGhosts;
     public static bool seeRoles;
-    public static bool showPlayerInfo;
+    public static bool seePlayerInfo;
     public static bool seeDisguises;
     public static bool taskArrows;
     public static bool revealVotes;
-    public static bool showLobbyInfo;
+    public static bool seeLobbyInfo;
 
     // Camera
     public static bool spectate;
@@ -77,28 +68,22 @@ public struct CheatToggles
     public static bool distanceBasedTracers;
 
     // Chat
-    public static bool alwaysChat;
+    public static bool enableChat;
     public static bool unlockCharacters;
     public static bool bypassUrlBlock;
     public static bool longerMessages;
     public static bool unlockClipboard;
     public static bool lowerRateLimits;
 
-    // Console
-    public static bool showConsole;
-    public static bool logDeaths;
-    public static bool logShapeshifts;
-    public static bool logVents;
-
     // Ship
     public static bool closeMeeting;
-    public static bool sabotageMap;
-    public static bool openAllDoors;
-    public static bool closeAllDoors;
-    public static bool spamOpenAllDoors;
-    public static bool spamCloseAllDoors;
     public static bool autoOpenDoorsOnUse;
     public static bool unfixableLights;
+    public static bool callMeeting;
+    public static bool reportBody;
+    public static bool kickOffensiveNames;
+
+    // Sabotage
     public static bool commsSab;
     public static bool elecSab;
     public static bool reactorSab;
@@ -106,53 +91,73 @@ public struct CheatToggles
     public static bool mushSab;
     public static bool mushSpore;
     public static bool showDoorsMenu;
+    public static bool openAllDoors;
+    public static bool closeAllDoors;
+    public static bool spamOpenAllDoors;
+    public static bool spamCloseAllDoors;
+    public static bool sabotageMap;
 
     // Vents
-    public static bool useVents;
-    public static bool walkVent;
+    public static bool unlockVents;
+    public static bool walkInVents;
     public static bool kickVents;
-
-    // Host-Only
-    // public static bool impostorHack;
-    // public static bool godMode;
-    // public static bool evilVote;
-    public static bool voteImmune;
-    public static bool forceRole;
-    public static RoleTypes? forcedRole;
-    public static bool showRolesMenu;
-    public static bool skipMeeting;
-    public static bool callMeeting;
-    public static bool forceStartGame;
-    public static bool noGameEnd;
-    public static bool showProtectMenu;
-    public static bool noOptionsLimits;
-
-    // Passive
-    public static bool unlockFeatures;
-    public static bool freeCosmetics;
-    public static bool avoidBans;
-    public static bool copyLobbyCodeOnDisconnect;
-    public static bool spoofAprilFoolsDate;
-    public static bool stealthMode;
-    public static bool panic;
 
     // Animations
     public static bool animShields;
     public static bool animAsteroids;
     public static bool animEmptyGarbage;
-    public static bool animScan;
+    public static bool animMedScan;
     public static bool animCamsInUse;
     public static bool animPet;
+    public static bool moonWalk;
+
+    // Console
+    public static bool showConsole;
+    public static bool logDeaths;
+    public static bool logShapeshifts;
+    public static bool logVents;
+
+    // Host-Only
+    public static bool voteImmune;
+    public static bool forceRole;
+    public static RoleTypes? forcedRole;
+    public static bool showRolesMenu;
+    public static bool skipMeeting;
+    public static bool forceStartGame;
+    public static bool noGameEnd;
+    public static bool showProtectMenu;
+    public static bool noOptionsLimits;
+    public static bool ejectPlayer;
+    public static bool killPlayer;
+    public static bool telekillPlayer;
+    public static bool killAll;
+    public static bool killAllCrew;
+    public static bool killAllImps;
+    public static bool bypassHostOnly;
+
+    // Passive
+    public static bool unlockFeatures;
+    public static bool freeCosmetics;
+    public static bool avoidPenalties;
+    public static bool copyLobbyCodeOnDisconnect;
+    public static bool spoofAprilFoolsDate;
+
+    // Modes
+    public static bool rgbMode;
+    public static bool stealthMode;
+    public static bool panicMode;
 
     // Config
     public static bool reloadConfig;
-    public static bool rgbMode;
+    public static bool openConfig;
+    public static bool loadProfile;
+    public static bool saveProfile;
 
     // Keybind Map: Toggle Name -> KeyCode (KeyCode.None == No Key)
     public static readonly Dictionary<string, KeyCode> Keybinds = new();
 
-    // Internal Map for Reflection Access: Toggle Name -> FieldInfo
-    private static readonly Dictionary<string, FieldInfo> ToggleFields = new();
+    // Map for Reflection Access: Toggle Name -> FieldInfo
+    public static readonly Dictionary<string, FieldInfo> ToggleFields = new();
 
     public static readonly string ProfilePath = Path.Combine(BepInEx.Paths.ConfigPath, "MalumProfile.txt");
 
@@ -177,14 +182,14 @@ public struct CheatToggles
         killPlayer = variableToKeep == "killPlayer" && killPlayer;
         telekillPlayer = variableToKeep == "telekillPlayer" && telekillPlayer;
         spectate = variableToKeep == "spectate" && spectate;
-        changeRole = variableToKeep == "changeRole" && changeRole;
+        setFakeRole = variableToKeep == "changeRole" && setFakeRole;
         forceRole = variableToKeep == "forceRole" && forceRole;
         teleportPlayer = variableToKeep == "teleportPlayer" && teleportPlayer;
     }
 
     public static bool ShouldPPMClose()
     {
-        return !changeRole && !forceRole && !ejectPlayer && !reportBody && !telekillPlayer && !killPlayer && !spectate && !teleportPlayer;
+        return !setFakeRole && !forceRole && !ejectPlayer && !reportBody && !telekillPlayer && !killPlayer && !spectate && !teleportPlayer;
     }
 
     // Disables all cheat toggles by setting all to false using the cached ToggleFields
@@ -265,39 +270,6 @@ public struct CheatToggles
             }
 
             Keybinds[name] = key;
-        }
-    }
-
-    public class KeybindListener : MonoBehaviour
-    {
-        public MalumMenu Plugin { get; internal set; }
-
-        public void Update()
-        {
-            if (MalumMenu.isPanicked) return;
-
-            // Keybinds aren't triggered from typing in the chat
-            if (HudManager.InstanceExists && HudManager.Instance.Chat && HudManager.Instance.Chat.IsOpenOrOpening) return;
-
-            if (reloadConfig)
-            {
-                Plugin.Config.Reload();
-                MalumMenu.Log.LogInfo("Configuration reloaded");
-
-                reloadConfig = false;
-            }
-
-            // Check each keybind to see if the user pressed it and toggle the corresponding cheat
-            foreach (var (name, key) in Keybinds)
-            {
-                if (key == KeyCode.None) continue;
-                if (!Input.GetKeyDown(key)) continue;
-
-                if (!ToggleFields.TryGetValue(name, out var field)) continue;
-
-                var current = (bool)field.GetValue(null);
-                field.SetValue(null, !current);
-            }
         }
     }
 }

@@ -8,7 +8,7 @@ public static class MalumESP
     private static bool _resolutionChangeNeeded;
     public static void SporeCloudVision(Mushroom mushroom)
     {
-        if (CheatToggles.fullBright)
+        if (CheatToggles.noShadows)
         {
             // Change the Z axis position of spore clouds as to make players appear above them
 
@@ -25,7 +25,7 @@ public static class MalumESP
         // Fullbright is automatically activated when zooming out, spectating other players, or "freecamming"
         // This is done to avoid issues with shadows
 
-        return CheatToggles.fullBright || Camera.main.orthographicSize > 3f || Camera.main.gameObject.GetComponent<FollowerCamera>().Target != PlayerControl.LocalPlayer;
+        return CheatToggles.noShadows || Camera.main.orthographicSize > 3f || Camera.main.gameObject.GetComponent<FollowerCamera>().Target != PlayerControl.LocalPlayer;
     }
 
     public static void ZoomOut(HudManager hudManager)
@@ -92,12 +92,12 @@ public static class MalumESP
                 playerState.NameText.text = Utils.GetNameTag(data, data.DefaultOutfit.PlayerName);
 
                 // Move and resize the nametag to prevent it overlapping with colorblind text
-                if (CheatToggles.seeRoles && CheatToggles.showPlayerInfo)
+                if (CheatToggles.seeRoles && CheatToggles.seePlayerInfo)
                 {
                     playerState.NameText.transform.localPosition = new Vector3(0.33f, 0.08f, 0f);
                     playerState.NameText.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                 }
-                else if (CheatToggles.seeRoles || CheatToggles.showPlayerInfo)
+                else if (CheatToggles.seeRoles || CheatToggles.seePlayerInfo)
                 {
                     playerState.NameText.transform.localPosition = new Vector3(0.3384f, 0.1125f, -0.1f);
                     playerState.NameText.transform.localScale = new Vector3(0.9f, 1f, 1f);
@@ -118,11 +118,11 @@ public static class MalumESP
         {
             playerPhysics.myPlayer.cosmetics.SetName(Utils.GetNameTag(playerPhysics.myPlayer.Data, playerPhysics.myPlayer.CurrentOutfit.PlayerName));
             // Move the nameText up to prevent it overlapping with colorblind text
-            if (CheatToggles.seeRoles && CheatToggles.showPlayerInfo)
+            if (CheatToggles.seeRoles && CheatToggles.seePlayerInfo)
             {
                 playerPhysics.myPlayer.cosmetics.nameText.transform.localPosition = new Vector3(0f, 0.186f, 0f);
             }
-            else if (CheatToggles.seeRoles || CheatToggles.showPlayerInfo)
+            else if (CheatToggles.seeRoles || CheatToggles.seePlayerInfo)
             {
                 playerPhysics.myPlayer.cosmetics.nameText.transform.localPosition = new Vector3(0f, 0.093f, 0f);
             }

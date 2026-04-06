@@ -16,7 +16,7 @@ public class ProtectUI : MonoBehaviour
 
         UIHelpers.ApplyUIColor();
 
-        _windowRect = GUI.Window(5, _windowRect, (GUI.WindowFunction)ProtectWindow, "Protect Players");
+        _windowRect = GUI.Window((int)WindowId.ProtectUI, _windowRect, (GUI.WindowFunction)ProtectWindow, "Protect Players");
     }
 
     private void ProtectWindow(int windowID)
