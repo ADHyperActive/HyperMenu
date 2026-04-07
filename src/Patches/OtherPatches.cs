@@ -276,6 +276,8 @@ public static class Console_CanUse
     {
         if (CheatToggles.fakeTasks)
             __instance.AllowImpostor = true;
+        else if (__instance.TaskTypes != null && __instance.TaskTypes.Length > 0)
+            __instance.AllowImpostor = false;
     }
 
     // Postfix patch of Console.CanUse to allow any player to use any task console when in range
