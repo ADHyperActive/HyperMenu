@@ -35,11 +35,9 @@ public class ShipTab : ITab
 
         CheatToggles.unfixableLights = GUILayout.Toggle(CheatToggles.unfixableLights, " Unfixable Lights");
 
-        // CheatToggles.reportBody = GUILayout.Toggle(CheatToggles.reportBody, " Report Body");
-
         CheatToggles.callMeeting = GUILayout.Toggle(CheatToggles.callMeeting, " Call Meeting");
 
-        CheatToggles.reportBody = GUILayout.Toggle(CheatToggles.reportBody, "Report Body");
+        CheatToggles.reportBody = GUILayout.Toggle(CheatToggles.reportBody, " Report Body");
 
         CheatToggles.closeMeeting = GUILayout.Toggle(CheatToggles.closeMeeting, " Close Meeting");
 
