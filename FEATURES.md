@@ -1,4 +1,4 @@
-# 📋 Features
+# 📋 Features (MalumMenu)
 
 ## 👱 Player
 
@@ -121,6 +121,7 @@ MalumMenu's ESP cheats are completely client-side, and thus undetectable by anti
 
 | Cheat | Description | Type | Default |
 |------------|-------------|------|----|
+| Fake Tasks | Allows any player (including impostors) to interact with any task console on the ship, even if the task is not assigned to them | Toggle | Off |
 | Unfixable Lights | Disables lights completely (they cannot be fixed manually by players)<br>You can enable them again by clicking the button | Toggle | Off |
 | Report Body | Report any player as a dead body to start a meeting | Button |
 | Close Meeting | Forcefully closes the meeting window (only for you), allowing you to move and interact with the game during meetings | Button |
@@ -177,3 +178,7 @@ You can change all of the following settings in `BepInEx/config/MalumMenu.cfg`
 
 - MalumMenu has a simple **GUI** that is easy to navigate and can be toggled using the **DELETE** key on your keyboard
 - [**TEMPORARILY BROKEN**] MalumMenu comes with **custom announcements** that it will automatically fetch online at launch.
+
+# HyperMenu Changes
+- HyperMenu has a modernized version of the GUI
+- HyperMenu allows changes of config file settings within the GUI rather than having to change the settings and restart Among Us.

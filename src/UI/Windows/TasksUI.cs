@@ -17,8 +17,10 @@ public class TasksUI : MonoBehaviour
 
         _playerHeaderStyle ??= new GUIStyle(GUI.skin.button)
         {
-            fontSize = 18,
-            alignment = TextAnchor.MiddleLeft
+            fontSize = 16,
+            fontStyle = FontStyle.Bold,
+            alignment = TextAnchor.MiddleLeft,
+            padding = new RectOffset { left = 8, right = 8, top = 8, bottom = 8 }
         };
 
         UIHelpers.ApplyUIColor();
@@ -113,7 +115,7 @@ public class TasksUI : MonoBehaviour
 
         GUILayout.EndScrollView();
 
-        if (GUILayout.Button("Complete My Tasks", GUIStylePreset.NormalButton))
+        if (GUILayout.Button("Complete My Tasks", GUILayout.Height(30)))
         {
             CheatToggles.completeMyTasks = true;
         }

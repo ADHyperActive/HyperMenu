@@ -75,7 +75,7 @@ public class ProtectUI : MonoBehaviour
 
         GUILayout.BeginHorizontal();
 
-        if (GUILayout.Button("Protect Everyone") && Utils.isHost && !Utils.isLobby)
+        if (GUILayout.Button("Protect Everyone", GUILayout.Height(30)) && Utils.isHost && !Utils.isLobby)
         {
             foreach (var player in PlayerControl.AllPlayerControls)
             {

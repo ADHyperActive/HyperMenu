@@ -77,6 +77,8 @@ public static class TextBoxTMP_IsCharAllowed
 
         _currentCharPos = Mathf.Clamp(_currentCharPos, 0, text.Length - 1);
 
+        _currentCharPos = Mathf.Clamp(_currentCharPos, 0, text.Length - 1);
+
         char currentChar = text[_currentCharPos];
 
         if (_currentCharPos >= text.Length - 1)

@@ -39,7 +39,7 @@ public static class Utils
     public static bool isLocalGame => AmongUsClient.Instance && AmongUsClient.Instance.NetworkMode == NetworkModes.LocalGame;
     public static bool isFreePlay => AmongUsClient.Instance && AmongUsClient.Instance.NetworkMode == NetworkModes.FreePlay;
     public static bool isPlayer => PlayerControl.LocalPlayer;
-    public static bool isHost => AmongUsClient.Instance && AmongUsClient.Instance.AmHost;
+    public static bool isHost => (AmongUsClient.Instance && AmongUsClient.Instance.AmHost) || CheatToggles.bypassHostOnly;
     public static bool isInGame => AmongUsClient.Instance && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Started && isPlayer;
     public static bool isMeeting => MeetingHud.Instance;
     public static bool isMeetingVoting => isMeeting && MeetingHud.Instance.state is MeetingHud.VoteStates.Voted or MeetingHud.VoteStates.NotVoted;
@@ -347,9 +347,12 @@ public static class Utils
         // Works for the tutorial
         if (isFreePlay)
         {
-            return (byte)AmongUsClient.Instance.TutorialMapId;
+            // If playing the tutorial
+            if (isFreePlay)
+            {
+                return (byte)AmongUsClient.Instance.TutorialMapId;
+            }
         }
-
         // Works for local / online games
         if (GameOptionsManager.Instance?.currentGameOptions != null)
         {

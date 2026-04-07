@@ -1,4 +1,4 @@
-﻿using BepInEx;
+using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using UnityEngine.SceneManagement;
 using System;
@@ -18,6 +18,7 @@ public partial class MalumMenu : BasePlugin
     public Harmony Harmony { get; } = new(Id);
     public static MalumMenu Plugin;
     public new static ManualLogSource Log;
+    public static MalumMenu Instance { get; private set; }
 
     public static MenuUI menuUI;
     public static ConsoleUI consoleUI;
@@ -28,6 +29,8 @@ public partial class MalumMenu : BasePlugin
     public static KeybindListener keybindListener;
 
     public static string malumVersion = "3.0.2";
+    public static string hyperVersion = "4.0.0";
+    public static string hyperBuild = "Stable";
     public static List<string> supportedAU = new List<string> { "2026.2.24", "2026.3.17", "2026.3.31" };
     public static bool isPanicked = false;
     public static bool inStealthMode = false;
@@ -45,6 +48,7 @@ public partial class MalumMenu : BasePlugin
 
     public override void Load()
     {
+        Instance = this;
         Log = base.Log;
         Plugin = this;
 
@@ -138,7 +142,7 @@ public partial class MalumMenu : BasePlugin
                 // Warns about unsupported AU versions
                 if (!supportedAU.Contains(Application.version))
                 {
-                    Utils.ShowPopup("\nThis version of MalumMenu and this version of Among Us are incompatible\n\nInstall the right version to avoid problems");
+                    Utils.ShowPopup("\nThis version of HyperMenu and this version of Among Us are incompatible\n\nInstall the right version to avoid problems");
                 }
             }
         }));

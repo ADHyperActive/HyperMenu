@@ -14,14 +14,12 @@ public class ConsoleUI : MonoBehaviour
 
     public static void Log(string message)
     {
-        if (_logEntries.Count >= MaxLogEntries) // Limit the number of logs to keep memory usage in check
+        if (_logEntries.Count >= MaxLogEntries)
         {
-            _logEntries.RemoveAt(0); // Remove the oldest log entry
+            _logEntries.RemoveAt(0);
         }
 
         _logEntries.Add(message);
-
-        // Scroll to the bottom
         _scrollPosition.y = float.MaxValue;
     }
 
@@ -31,7 +29,9 @@ public class ConsoleUI : MonoBehaviour
 
         _logStyle ??= new GUIStyle(GUI.skin.label)
         {
-            fontSize = 16
+            fontSize = 14,
+            padding = new RectOffset { left = 4, right = 4, top = 2, bottom = 2 },
+            normal = { textColor = new Color(0.95f, 0.95f, 0.95f) }
         };
 
         UIHelpers.ApplyUIColor();
@@ -61,7 +61,7 @@ public class ConsoleUI : MonoBehaviour
             _logEntries.Clear();
         }
 
-        if (GUILayout.Button("Copy Log to Clipboard"))
+        if (GUILayout.Button("Copy to Clipboard", GUILayout.Height(30)))
         {
             GUIUtility.systemCopyBuffer = String.Join("\n", _logEntries.ToArray());
         }
