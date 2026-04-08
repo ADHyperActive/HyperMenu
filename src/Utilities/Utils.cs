@@ -599,26 +599,20 @@ public static class Utils
         return null;
     }
 
-    // Opens the config file in the default text editor (doesn't work on Linux with Proton)
+    // Opens the config file in the default text editor
     public static void OpenConfigFile()
     {
         var configFilePath = Path.Combine(Paths.ConfigPath, "MalumMenu.cfg");
 
         if (File.Exists(configFilePath))
         {
-            try
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                {
-                    FileName = configFilePath,
-                    UseShellExecute = true,
-                    Verb = "edit"
-                });
-            }
-            catch (Exception ex)
-            {
-                MalumMenu.Log.LogError($"Failed to open configuration file: {ex.Message}. If you are on Linux, this is expected.");
-            }
+                FileName = "notepad.exe",
+                Arguments = configFilePath,
+                UseShellExecute = true
+                //Verb = "edit"
+            });
         }
         else
         {
