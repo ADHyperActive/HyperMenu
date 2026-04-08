@@ -277,11 +277,8 @@ public static class Console_CanUse
         if (CheatToggles.impostorTasks)
         {
             __instance.AllowImpostor = true;
-    // Prefix patch of Console.CanUse to allow impostors to interact with task consoles
-    public static void Prefix(Console __instance)
-    {
-        if (CheatToggles.fakeTasks)
-            __instance.AllowImpostor = true;
+        }
+        // Prefix patch of Console.CanUse to allow impostors to interact with task consoles
     }
 
     // Postfix patch of Console.CanUse to allow any player to use any task console when in range
