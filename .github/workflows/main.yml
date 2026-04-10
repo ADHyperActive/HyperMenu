@@ -3,7 +3,7 @@ name: Build and Release BepInEx Mod
 on:
   push:
     branches:
-      - main # Triggers the workflow on pushes to the main branch
+      - release # Triggers the workflow on pushes to the 'release' branch
 
 # Required to allow the GitHub Action to create a release and upload assets
 permissions:
@@ -19,8 +19,10 @@ jobs:
       PROJECT_PATH: ./src 
       # The name of the folder your mod will be extracted to inside the plugins folder
       MOD_FOLDER_NAME: MalumMenu 
-      # Output zip name
+      # Release output zip name
       RELEASE_ZIP_NAME: HyperMenu-Release.zip
+      # Debug output zip name
+      DEBUG_ZIP_NAME: HyperMenu-Debug.zip
 
     steps:
       - name: Checkout repository
@@ -39,21 +41,33 @@ jobs:
         # Builds the project and outputs the files into a temporary staging folder
         run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore --output ./staging/BepInEx/plugins/${{ env.MOD_FOLDER_NAME }}
 
+      - name: Build the debug project
+        # Builds the project in debug config and outputs the files into a temporary staging folder
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Debug --no-restore --output ./staging_debug/BepInEx/plugins/${{ env.MOD_FOLDER_NAME }}
+
       - name: Package Mod into Zip
         # Navigates to the staging directory and zips everything so it has the correct folder structure
         run: |
           cd staging
           zip -r ../${{ env.RELEASE_ZIP_NAME }} .
 
+      - name: Package debug mod version into Zip
+        # Navigates to the staging_debug directory and zips everything so it has the correct folder structure
+        run: |
+          cd staging_debug
+          zip -r ../${{ env.DEBUG_ZIP_NAME }} .
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          # Tags the release using the fetched ModVersion (or fallback)
+          # Tags the release using the ModVersion in repo variables
           tag_name: v${{ vars.VERSION }}
           name: Release v${{ vars.VERSION }}
           draft: false
           prerelease: false
-          files: ${{ env.RELEASE_ZIP_NAME }}
+          files: |
+            ${{ env.RELEASE_ZIP_NAME }}
+            ${{ env.DEBUG_ZIP_NAME }}
           generate_release_notes: true
           # Note: If you prefer to manually trigger releases instead of on every push, 
           # you can change the 'on:' block at the top to 'on: workflow_dispatch:'
