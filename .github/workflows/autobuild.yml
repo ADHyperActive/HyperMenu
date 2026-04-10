@@ -28,12 +28,12 @@ jobs:
     env:
       # Change this if your project file is in a subfolder (e.g., src/MyMod/MyMod.csproj)
       PROJECT_PATH: ./src 
-      # The name of the folder your mod will be extracted to inside the plugins folder
-      MOD_FOLDER_NAME: MalumMenu 
       # Release output zip name
       RELEASE_ZIP_NAME: HyperMenu-Release.zip
       # Debug output zip name
       DEBUG_ZIP_NAME: HyperMenu-Debug.zip
+      # Express install output zip name
+      EXPRESS_ZIP_NAME: HyperMenu-Install.zip
 
     steps:
       - name: Checkout repository
@@ -60,23 +60,44 @@ jobs:
 
       - name: Build the project
         # Builds the project and outputs the files into a temporary staging folder
-        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore --output ./staging/BepInEx/plugins/${{ env.MOD_FOLDER_NAME }}
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore --output ./staging/BepInEx/plugins
 
       - name: Build the debug project
         # Builds the project in debug config and outputs the files into a temporary staging folder
-        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Debug --no-restore --output ./staging_debug/BepInEx/plugins/${{ env.MOD_FOLDER_NAME }}
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Debug --no-restore --output ./staging_debug/BepInEx/plugins
 
-      - name: Package Mod into Zip
+      - name: Update mod file name
+        # Updates the name of the mod file
+        run: |
+          mv staging/BepInEx/plugins/MalumMenu.dll staging/BepInEx/plugins/HyperMenu.dll
+          mv staging_debug/BepInEx/plugins/MalumMenu.dll staging_debug/BepInEx/plugins/HyperMenu.dll
+          mv staging/BepInEx/plugins/MalumMenu.deps.json staging/BepInEx/plugins/HyperMenu.deps.json
+          mv staging_debug/BepInEx/plugins/MalumMenu.deps.json staging_debug/BepInEx/plugins/HyperMenu.deps.json
+
+
+      - name: Package Mod into Zip (01)
         # Navigates to the staging directory and zips everything so it has the correct folder structure
         run: |
           cd staging
           zip -r ../${{ env.RELEASE_ZIP_NAME }} .
 
-      - name: Package debug mod version into Zip
+      - name: Package Mod into Zip (02)
         # Navigates to the staging_debug directory and zips everything so it has the correct folder structure
         run: |
           cd staging_debug
           zip -r ../${{ env.DEBUG_ZIP_NAME }} .
+
+      - name: Package Mod into Zip (03)
+        # Copies the release build, extracts split BepInEx base files into it, and zips it up
+        run: |
+          cp -r staging staging_express
+          unzip -o bepinex_1.zip -d staging_express/
+          unzip -o bepinex_2.zip -d staging_express/
+          unzip -o bepinex_3.zip -d staging_express/
+          unzip -o bepinex_4.zip -d staging_express/
+          unzip -o bepinex_5.zip -d staging_express/
+          cd staging_express
+          zip -r ../${{ env.EXPRESS_ZIP_NAME }} .
 
       - name: Force Update Tag (if exists)
         run: |
@@ -101,6 +122,27 @@ jobs:
           files: |
             ${{ env.RELEASE_ZIP_NAME }}
             ${{ env.DEBUG_ZIP_NAME }}
+            ${{ env.EXPRESS_ZIP_NAME }}
+          append_body: false
+          body: |
+            # Downloads
+            * Download 'HyperMenu_Install' for quick install
+            * Download 'HyperMenu_Release' for quick update (HyperMenu needs to already be installed)
+            * Download 'HyperMenu_Debug' to debug HyperMenu (if you want to help out).
+              * First, you need to learn how to write C#.
+            
+            ---
+            # How to install
+            * Whatever .zip you download, the install process is the same.
+            * First, download the .zip file
+            * Next, extract the .zip file into your Among Us directory
+            * You're done.
+            
+            ---
+            # NOTICE:
+            * This menu is based on MalumMenu by scp222thj and astra1dev. All credit goes to scp222thj and astra1dev. See [here](https://github.com/scp222thj/MalumMenu) for more info.
+            
+            ---
           generate_release_notes: true
           # Note: If you prefer to manually trigger releases instead of on every push, 
           # you can change the 'on:' block at the top to 'on: workflow_dispatch:'
