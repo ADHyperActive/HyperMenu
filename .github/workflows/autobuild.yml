@@ -1,13 +1,10 @@
 name: Build and Release BepInEx Mod
 
 on:
-  push:
-    branches:
-      - main # Triggers the workflow on pushes to the main branch
   workflow_dispatch:
     inputs:
       reason:
-        description: 'Reason for manual run'
+        description: 'Reason for build'
         required: false
         default: 'Manual trigger'
       version_override:
