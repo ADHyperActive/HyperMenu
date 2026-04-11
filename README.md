@@ -25,8 +25,8 @@ https://discord.gg/GZKcdkFD5
     <img hspace="6" src="https://img.shields.io/badge/Support%20astra1dev-Monero-FF6600?style=flat&logo=monero" alt="Monero">
   </a>
 
-  <a href="https://github.com/ADHyperActive/MalumMenu/releases">
-    <img hspace="6" src="https://img.shields.io/github/downloads/ADHyperActive/MalumMenu/total?style=flat&logo=github&label=Total%20Downloads&color=2ECC71" alt="Downloads">
+  <a href="https://github.com/The-HyperMenu-Team/HyperMenu/releases">
+    <img hspace="6" src="https://img.shields.io/github/downloads/The-HyperMenu-Team/HyperMenu/total?style=flat&logo=github&label=Total%20Downloads&color=2ECC71" alt="Downloads">
   </a>
 
   `I don't want money from this fork since it's just developed because I don't want to burden the devs with my feature requests. Therefore, I'm not including a button to support me. If you would like to support this project, please support the developers of the original MalumMenu instead, as this project would not be possible without their work. -ADHyperActive`
@@ -57,22 +57,22 @@ https://the-hypermenu-team.github.io/Wiki/
 
 | Mod Version| Among Us - Version | Link |
 |----------|-------------|-----------------|
-| v3.0.3 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV3.0.3) |
-| v3.0.2 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV3.0.2) |
-| v3.0.1 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV3.0.1) |
-| v2.1.1 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.1.1) |
-| v2.1.0 |  2026.3.17  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.1.0) |
-| v2.0.1 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.0.1) |
-| v2.0.0 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV2.0.0) |
-| v1.0.1 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV1.0.1) |
-| v1.0.0 |  2026.2.24  | [Download](https://github.com/ADHyperActive/MalumMenu/releases/tag/ADV1.0.0) |
+| v3.0.3 |  2026.3.17  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV3.0.3) |
+| v3.0.2 |  2026.3.17  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV3.0.2) |
+| v3.0.1 |  2026.3.17  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV3.0.1) |
+| v2.1.1 |  2026.3.17  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV2.1.1) |
+| v2.1.0 |  2026.3.17  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV2.1.0) |
+| v2.0.1 |  2026.2.24  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV2.0.1) |
+| v2.0.0 |  2026.2.24  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV2.0.0) |
+| v1.0.1 |  2026.2.24  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV1.0.1) |
+| v1.0.0 |  2026.2.24  | [Download](https://github.com/The-HyperMenu-Team/HyperMenu/releases/tag/ADV1.0.0) |
 
 
 # ⬇️ Installation
 
 ## 🪟 Windows
 
-1. Download the latest **HyperMenu zip pack** from [here](https://github.com/ADHyperActive/MalumMenu/releases/latest).
+1. Download the latest **HyperMenu zip pack** from [here](https://github.com/The-HyperMenu-Team/HyperMenu/releases/latest).
     - **For Steam or Itch.io:** Download `HyperMenu-VERSION-Steam-Itch.zip`.
     - **For Microsoft Store, Epic Games Store, or Xbox App:** Not supported by HyperMenu. For these platforms, go to the original MalumMenu [here](https://github.com/scp222thj/MalumMenu/releases/latest).
 
@@ -141,7 +141,7 @@ https://the-hypermenu-team.github.io/Wiki/
 - No more annoying disconnect penalties
 
 For a complete list of all of MalumMenu's features, click [here](https://github.com/scp222thj/MalumMenu/blob/main/FEATURES.md)
-For a complete list of all of HyperMenu's features, click [here](https://github.com/ADHyperActive/MalumMenu/blob/main/FEATURES.md)
+For a complete list of all of HyperMenu's features, click [here](https://github.com/The-HyperMenu-Team/HyperMenu/blob/main/FEATURES.md)
 
 # ❓ FAQ
 
@@ -186,7 +186,7 @@ When installing MalumMenu for the first time, it will take **MUCH** longer than 
 
 <summary><h2>👾 I found a bug OR I would like to suggest a new feature</h2></summary>
 
-To report a bug or request a feature, you can open a new Github issue [on the original MalumMenu](https://github.com/scp222thj/MalumMenu/issues/new), or [on my fork](https://github.com/ADHyperActive/MalumMenu/issues/new) (I recommend the original since I'm unlikely to implement changes on my fork due to being busy high school student), or you can discuss it on the MalumMenu Discord server: [discord.gg/YYcYf88jAb](https://discord.gg/YYcYf88jAb)
+To report a bug or request a feature, you can open a new Github issue [on the original MalumMenu](https://github.com/scp222thj/MalumMenu/issues/new), or [on my fork](https://github.com/The-HyperMenu-Team/HyperMenu/issues/new) (I recommend the original since I'm unlikely to implement changes on my fork due to being busy high school student), or you can discuss it on the MalumMenu Discord server: [discord.gg/YYcYf88jAb](https://discord.gg/YYcYf88jAb)
 
 </details>
 
