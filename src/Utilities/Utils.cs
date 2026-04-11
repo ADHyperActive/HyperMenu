@@ -602,7 +602,7 @@ public static class Utils
     // Opens the config file in the default text editor
     public static void OpenConfigFile()
     {
-        var configFilePath = Path.Combine(Paths.ConfigPath, "MalumMenu.cfg");
+        var configFilePath = MalumMenu.Plugin.Config.ConfigFilePath;
 
         if (File.Exists(configFilePath))
         {
