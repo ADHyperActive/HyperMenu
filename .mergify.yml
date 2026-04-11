@@ -2,3 +2,5 @@ queue_rules:
   - name: Main
     update_method: merge
     batch_max_wait_time: 5 m
+merge_protections_settings:
+  reporting_method: check-runs
