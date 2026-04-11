@@ -33,8 +33,6 @@ public class ShipTab : ITab
     {
         // Will implement this later, currently gets user kicked by AC. -ADHyperActive
         // CheatToggles.completeAllTasks = GUILayout.Toggle(CheatToggles.completeAllTasks, " Allow All Tasks");
-
-        CheatToggles.unfixableLights = GUILayout.Toggle(CheatToggles.unfixableLights, " Unfixable Lights");
         
         CheatToggles.fakeTasks = GUILayout.Toggle(CheatToggles.fakeTasks, " Fake Tasks");
 
