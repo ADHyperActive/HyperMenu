@@ -4,7 +4,6 @@ queue_rules:
     batch_max_wait_time: 5 m
     merge_conditions:
       - and:
-          - label = approved
           - check-success = continuous-integration/travis-ci
 merge_protections:
   - name: Check title
