@@ -16,6 +16,8 @@ public static class ShipStatus_FixedUpdate
         MalumCheats.WalkInVentCheat();
         MalumCheats.KickVentsCheat();
 
+        MalumCheats.DoAnyTaskCheat();
+
         MalumPPMCheats.ReportBodyPPM();
     }
 }

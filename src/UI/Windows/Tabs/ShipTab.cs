@@ -36,6 +36,8 @@ public class ShipTab : ITab
         
         CheatToggles.fakeTasks = GUILayout.Toggle(CheatToggles.fakeTasks, " Fake Tasks");
 
+        CheatToggles.doAnyTask = GUILayout.Toggle(CheatToggles.doAnyTask, " Do Any Task");
+
         CheatToggles.unfixableLights = GUILayout.Toggle(CheatToggles.unfixableLights, " Unfixable Lights");
 
         CheatToggles.callMeeting = GUILayout.Toggle(CheatToggles.callMeeting, " Call Meeting");
