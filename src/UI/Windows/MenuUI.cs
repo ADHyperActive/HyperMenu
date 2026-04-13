@@ -10,6 +10,7 @@ public class MenuUI : MonoBehaviour
     public static int windowWidth = 800;
 
     public static bool isGUIActive = false;
+    private Rect _windowRect;
     private List<ITab> _tabs = new();
     private int _selectedTab;
     public static float hue; // For RGB mode
