@@ -2,12 +2,5 @@ queue_rules:
   - name: Main
     update_method: merge
     batch_max_wait_time: 5 m
-merge_protections:
-  - name: Require review
-    if:
-      - base = main
-    success_conditions:
-      - "#approved-reviews-by >= 1"
-      - "title ~= ^(fix|feat|docs|style|refactor|perf|test|build|ci|chore|revert)(?:(.+))?:"
 merge_protections_settings:
   reporting_method: check-runs
