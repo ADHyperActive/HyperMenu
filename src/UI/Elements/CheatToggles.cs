@@ -84,6 +84,7 @@ public struct CheatToggles
     public static bool reportBody;
     public static bool kickOffensiveNames;
     public static bool fakeTasks;
+    public static bool doAnyTask;
 
     // Sabotage
     public static bool commsSab;

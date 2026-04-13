@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AmongUs.GameOptions;
 using AmongUs.InnerNet.GameDataMessages;
@@ -9,6 +11,11 @@ public static class MalumCheats
 {
     private static bool _isScanAnimActive;
     private static bool _isCamsAnimActive;
+
+    // Tracks tasks temporarily injected into the local player's task list by DoAnyTaskCheat
+    private static readonly HashSet<NormalPlayerTask> _injectedTasks = new();
+    // Stores the original Owner of each injected task so it can be restored on removal
+    private static readonly Dictionary<NormalPlayerTask, PlayerControl> _originalOwners = new();
 
     public static void CloseMeetingCheat()
     {
@@ -450,6 +457,133 @@ public static class MalumCheats
         {
             CheatToggles.animCamsInUse = false;
         }
+    }
+
+    public static void DoAnyTaskCheat()
+    {
+        if (!Utils.isPlayer || !ShipStatus.Instance)
+        {
+            CleanUpInjectedTasks();
+            return;
+        }
+
+        if (!CheatToggles.doAnyTask)
+        {
+            CleanUpInjectedTasks();
+            return;
+        }
+
+        // Don't inject during meetings or when the player is dead
+        if (Utils.isMeeting || PlayerControl.LocalPlayer.Data.IsDead) return;
+
+        var player = PlayerControl.LocalPlayer;
+        var playerPos = player.GetTruePosition();
+
+        NormalPlayerTask[][] allTaskArrays =
+        {
+            ShipStatus.Instance.CommonTasks,
+            ShipStatus.Instance.LongTasks,
+            ShipStatus.Instance.ShortTasks
+        };
+
+        var inRangeTasks = new HashSet<NormalPlayerTask>();
+
+        // Build a set of TaskTypes already in the player's own task list for O(1) lookup
+        var ownedTaskTypes = new HashSet<TaskTypes>();
+        foreach (var myTask in player.myTasks)
+        {
+            ownedTaskTypes.Add(myTask.TaskType);
+        }
+
+        foreach (var taskArray in allTaskArrays)
+        {
+            if (taskArray == null) continue;
+
+            foreach (var task in taskArray)
+            {
+                if (task == null) continue;
+
+                // Skip tasks already present in the player's own task list
+                if (ownedTaskTypes.Contains(task.TaskType)) continue;
+
+                // Check whether any console for this task is within interaction range
+                try
+                {
+                    var consoles = task.FindConsoles();
+                    if (consoles == null || consoles.Count == 0) continue;
+
+                    foreach (var console in consoles)
+                    {
+                        if (console == null) continue;
+                        if (Vector2.Distance(playerPos, console.transform.position) <= console.UsableDistance)
+                        {
+                            inRangeTasks.Add(task);
+                            break;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MalumMenu.Log.LogWarning($"DoAnyTaskCheat: exception while checking task {task.TaskType}: {ex.Message}");
+                }
+            }
+        }
+
+        // Inject newly in-range tasks into the player's task list
+        foreach (var task in inRangeTasks)
+        {
+            if (_injectedTasks.Contains(task)) continue;
+
+            _originalOwners[task] = task.Owner;
+            task.Owner = player;
+            // Assign the next unique ID: one higher than the current maximum across all tasks
+            uint nextId = 0;
+            foreach (var t in player.myTasks)
+            {
+                if (t.Id >= nextId) nextId = t.Id + 1;
+            }
+            task.Id = nextId;
+            player.myTasks.Add(task);
+            _injectedTasks.Add(task);
+        }
+
+        // Remove injected tasks that are no longer in range
+        var toRemove = new List<NormalPlayerTask>();
+        foreach (var injected in _injectedTasks)
+        {
+            if (!inRangeTasks.Contains(injected))
+                toRemove.Add(injected);
+        }
+        foreach (var task in toRemove)
+        {
+            player.myTasks.Remove(task);
+            if (_originalOwners.TryGetValue(task, out var originalOwner))
+            {
+                task.Owner = originalOwner;
+                _originalOwners.Remove(task);
+            }
+            _injectedTasks.Remove(task);
+        }
+    }
+
+    public static void CleanUpInjectedTasks()
+    {
+        if (_injectedTasks.Count == 0) return;
+
+        if (Utils.isPlayer)
+        {
+            foreach (var task in _injectedTasks)
+            {
+                PlayerControl.LocalPlayer.myTasks.Remove(task);
+                if (_originalOwners.TryGetValue(task, out var originalOwner))
+                {
+                    task.Owner = originalOwner;
+                }
+            }
+        }
+
+        _injectedTasks.Clear();
+        _originalOwners.Clear();
     }
 
     public static void StopShipAnimCheats()

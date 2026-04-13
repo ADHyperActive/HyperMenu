@@ -154,6 +154,7 @@ public class MenuUI : MonoBehaviour
             CheatToggles.mushSpore = false;
 
             MalumCheats.StopShipAnimCheats();
+            MalumCheats.CleanUpInjectedTasks();
         }
 
         if(!Utils.isHost && !Utils.isFreePlay)
