@@ -26,5 +26,12 @@ public class PassiveTab : ITab
         CheatToggles.copyLobbyCodeOnDisconnect = GUILayout.Toggle(CheatToggles.copyLobbyCodeOnDisconnect, " Copy Lobby Code on Disconnect");
 
         CheatToggles.spoofAprilFoolsDate = GUILayout.Toggle(CheatToggles.spoofAprilFoolsDate, " Spoof Date to April 1st");
+
+        CheatToggles.randomizeCosmetics = GUILayout.Toggle(CheatToggles.randomizeCosmetics, " Randomize on Lobby Join");
+
+        if (GUILayout.Button(" Randomize Now", GUILayout.Width(200)))
+        {
+            MalumRandomizer.Randomize();
+        }
     }
 }
