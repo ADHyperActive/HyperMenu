@@ -24,13 +24,6 @@ public class ConsoleUI : MonoBehaviour
             windowWidth,
             windowHeight
         );
-        if (_logEntries.Count >= MaxLogEntries)
-        {
-            _logEntries.RemoveAt(0);
-        }
-
-        _logEntries.Add(message);
-        _scrollPosition.y = float.MaxValue;
     }
 
     private void OnGUI()
