@@ -5,13 +5,27 @@ namespace MalumMenu;
 
 public class DoorsUI : MonoBehaviour
 {
-    private Rect _windowRect = new(320, 10, 480, 270);
+    public static int windowHeight = 270;
+    public static int windowWidth = 480;
+    private Rect _windowRect;
+
     private List<SystemTypes> _doorsToSpamOpen = new();
     private List<SystemTypes> _doorsToSpamClose = new();
 
+    private void Start()
+    {
+        // Instantiate 2D area of DoorsUI
+        _windowRect = new(
+            Screen.width / 2f - windowWidth / 2f,
+            Screen.height / 2f - windowHeight / 2f,
+            windowWidth,
+            windowHeight
+        );
+    }
+
     private void OnGUI()
     {
-        if (!CheatToggles.showDoorsMenu || !MenuUI.isGUIActive || MalumMenu.isPanicked) return;
+        if (!CheatToggles.showDoorsMenu || !(MenuUI.isGUIActive || MalumMenu.menuKeepSubwindowsOpen.Value) || MalumMenu.isPanicked) return;
 
         UIHelpers.ApplyUIColor();
 

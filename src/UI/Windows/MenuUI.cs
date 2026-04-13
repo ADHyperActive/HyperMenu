@@ -9,17 +9,15 @@ public class MenuUI : MonoBehaviour
     public static int windowHeight = 600;
     public static int windowWidth = 800;
 
-    private List<ITab> _tabs = new();
-    private Rect _windowRect = new(10, 10, windowWidth, windowHeight);
     public static bool isGUIActive = false;
+    private List<ITab> _tabs = new();
     private int _selectedTab;
-
     public static float hue; // For RGB mode
     private bool _wasInGameplay = false;
 
-    // Add all tabs on start
     private void Start()
     {
+        // Add all tabs on start
         _tabs.Add(new MovementTab());
         _tabs.Add(new ESPTab());
         _tabs.Add(new RolesTab());
@@ -31,6 +29,14 @@ public class MenuUI : MonoBehaviour
         _tabs.Add(new PassiveTab());
         _tabs.Add(new ModesTab());
         _tabs.Add(new ConfigTab());
+
+        // Instantiate 2D area of MenuUI
+        _windowRect = new(
+            Screen.width / 2f - windowWidth / 2f,
+            Screen.height / 2f - windowHeight / 2f,
+            windowWidth,
+            windowHeight
+        );
         _tabs.Add(new SettingsTab());
     }
 
@@ -78,6 +84,12 @@ public class MenuUI : MonoBehaviour
 
         var stamp = ModManager.Instance.ModStamp;
         if (stamp) stamp.enabled = !(MalumMenu.inStealthMode || MalumMenu.isPanicked);
+
+        if (CheatToggles.openConfig)
+        {
+            Utils.OpenConfigFile();
+            CheatToggles.openConfig = false;
+        }
 
         // Check if round just ended and disable sabotage cheats
         bool currentlyInGameplay = Utils.isPlayer && Utils.isShip;

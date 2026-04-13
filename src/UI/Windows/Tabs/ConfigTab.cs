@@ -17,13 +17,7 @@ public class ConfigTab : ITab
 
     private void DrawGeneral()
     {
-        // CheatToggles.openConfig = GUILayout.Toggle(CheatToggles.openConfig, " Open Config");
-
-        // if (CheatToggles.openConfig)
-        // {
-        //    Utils.OpenConfigFile();
-        //    CheatToggles.openConfig = false;
-        // }
+        CheatToggles.openConfig = GUILayout.Toggle(CheatToggles.openConfig, " Open Config");
 
         CheatToggles.reloadConfig = GUILayout.Toggle(CheatToggles.reloadConfig, " Reload Config");
 

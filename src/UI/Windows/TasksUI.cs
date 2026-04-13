@@ -5,15 +5,29 @@ namespace MalumMenu;
 
 public class TasksUI : MonoBehaviour
 {
+    public static int windowHeight = 300;
+    public static int windowWidth = 500;
+    private Rect _windowRect;
+
     private Vector2 _scrollPosition = Vector2.zero;
-    private Rect _windowRect = new(320, 10, 500, 300);
     private GUIStyle _playerHeaderStyle;
     private Il2CppSystem.Text.StringBuilder _tasksString = new();
     private readonly System.Collections.Generic.Dictionary<string, bool> _expandedPlayers = new();
 
+    private void Start()
+    {
+        // Instantiate 2D area of TasksUI
+        _windowRect = new(
+            Screen.width / 2f - windowWidth / 2f,
+            Screen.height / 2f - windowHeight / 2f,
+            windowWidth,
+            windowHeight
+        );
+    }
+
     private void OnGUI()
     {
-        if (!CheatToggles.showTasksMenu || !MenuUI.isGUIActive || MalumMenu.isPanicked) return;
+        if (!CheatToggles.showTasksMenu || !(MenuUI.isGUIActive || MalumMenu.menuKeepSubwindowsOpen.Value) || MalumMenu.isPanicked) return;
 
         _playerHeaderStyle ??= new GUIStyle(GUI.skin.button)
         {

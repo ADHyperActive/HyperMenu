@@ -607,30 +607,39 @@ public static class Utils
         return null;
     }
 
-    // Opens the config file in the default text editor (doesn't work on Linux with Proton)
+    // Opens the config file in the default text editor
     public static void OpenConfigFile()
     {
-        var configFilePath = Path.Combine(Paths.ConfigPath, "MalumMenu.cfg");
+        var configFilePath = MalumMenu.Plugin.Config.ConfigFilePath;
+        var configEditor = MalumMenu.configEditor.Value;
 
-        if (File.Exists(configFilePath))
+        if (!string.IsNullOrWhiteSpace(configEditor))
         {
-            try
+            if (File.Exists(configFilePath))
             {
-                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                try
                 {
-                    FileName = configFilePath,
-                    UseShellExecute = true,
-                    Verb = "edit"
-                });
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                    {
+                        FileName = configEditor,
+                        Arguments = configFilePath,
+                        UseShellExecute = true
+                        //Verb = "edit"
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MalumMenu.Log.LogError(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                MalumMenu.Log.LogError($"Failed to open configuration file: {ex.Message}. If you are on Linux, this is expected.");
+                MalumMenu.Log.LogError("Configuration file does not exist");
             }
         }
         else
         {
-            MalumMenu.Log.LogError("Configuration file does not exist");
+            MalumMenu.Log.LogError("Configuration editor not specified");
         }
     }
 
