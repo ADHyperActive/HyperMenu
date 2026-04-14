@@ -538,10 +538,8 @@ public static class Utils
 
     public static string GetRandomName()
     {
-        // Randomizes 1-12 characters long names
-        var length = UnityEngine.Random.Range(1, 13);
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        return new string(Enumerable.Repeat(chars, length).Select(s => s[UnityEngine.Random.Range(0, s.Length)]).ToArray());
+        // Delegates to Among Us's built-in name randomizer.
+        return DestroyableSingleton<AccountManager>.Instance.GetRandomName();
     }
 
     // Shows a custom popup ingame

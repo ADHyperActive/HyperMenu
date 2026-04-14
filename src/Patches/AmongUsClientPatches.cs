@@ -13,6 +13,10 @@ public static class LobbyBehaviour_Start
     {
         if (!CheatToggles.randomizeCosmetics) return;
 
+        // Skip when we are in the middle of a leave-randomize-rejoin sequence to avoid
+        // triggering a second randomize cycle after the automatic rejoin.
+        if (MalumRandomizer.isRejoinInProgress) return;
+
         AmongUsClient.Instance.StartCoroutine(DelayedRandomize());
     }
 
