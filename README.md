@@ -29,7 +29,9 @@ https://discord.gg/GZKcdkFD5
     <img hspace="6" src="https://img.shields.io/github/downloads/The-HyperMenu-Team/HyperMenu/total?style=flat&logo=github&label=Total%20Downloads&color=2ECC71" alt="Downloads">
   </a>
 
-  `I don't want money from this fork as I have other sources of income. Therefore, I'm not including a button to support me. If you would like to support this project, please either support the developers of the original MalumMenu instead, as this project would not be possible without their work, or boost our discord server. -ADHyperActive`
+  `I don't want money from this fork as I have other sources of income. Therefore, I'm not including a button to support me. If you would like to support this project, please either support the developers of the original MalumMenu instead, as this project would not be possible without their work, or boost our discord server.`
+  
+  `-ADHyperActive`
 </p>
 
 <p align="center">
