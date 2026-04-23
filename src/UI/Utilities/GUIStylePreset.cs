@@ -5,6 +5,7 @@ namespace MalumMenu;
 public static class GUIStylePreset
 {
     private static GUIStyle _separator;
+    private static GUIStyle _darkSeparator;
     private static GUIStyle _normalButton;
     private static GUIStyle _normalToggle;
     private static GUIStyle _tabButton;
@@ -27,6 +28,25 @@ public static class GUIStylePreset
             }
 
             return _separator;
+        }
+    }
+
+    public static GUIStyle DarkSeparator
+    {
+        get
+        {
+            if (_darkSeparator == null)
+            {
+                _darkSeparator = new GUIStyle(GUI.skin.box)
+                {
+                    normal = { background = Texture2D.grayTexture },
+                    margin = new RectOffset { top = 4, bottom = 4 },
+                    padding = new RectOffset(),
+                    border = new RectOffset()
+                };
+            }
+
+            return _darkSeparator;
         }
     }
 

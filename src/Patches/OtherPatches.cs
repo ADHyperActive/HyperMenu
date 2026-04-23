@@ -6,6 +6,7 @@ using UnityEngine;
 using System;
 using System.Security.Cryptography;
 using InnerNet;
+using System.Collections.Generic;
 
 namespace MalumMenu;
 
@@ -22,6 +23,54 @@ public static class Constants_GetPlatformData
                 Platform = (Platforms)platformType,
                 PlatformName = Constants.GetPlatformName()
             };
+        }
+    }
+}
+
+[HarmonyPatch(typeof(GameData), nameof(GameData.HandleDisconnect), new[] { typeof(PlayerControl), typeof(DisconnectReasons) })]
+public static class GameData_HandleDisconnect
+{
+    public static HashSet<int> disconnectQueue = new();
+
+    // Prefix patch of GameData.HandleDisconnect to keep track of successful overloads
+    public static void Prefix(PlayerControl player)
+    {
+        if (!CheatToggles.runOverload) return;
+
+        NetworkedPlayerInfo playerData = player?.Data;
+        if (playerData == null) return;
+
+        bool isTarget = OverloadUI.currentTargets.Contains(playerData);
+
+        if (isTarget) disconnectQueue.Add(playerData.ClientId);
+    }
+
+    // Postfix patch of GameData.HandleDisconnect to keep track of successful overloads
+    public static void Postfix(PlayerControl player)
+    {
+        if (!CheatToggles.runOverload) return;
+
+        NetworkedPlayerInfo playerData = player?.Data;
+        if (playerData == null) return;
+
+        int clientId = player.Data.ClientId;
+
+        if (disconnectQueue.Contains(clientId))
+        {
+            OverloadUI.numSuccesses++;
+
+            if (CheatToggles.olLogDisconnect)
+            {
+                int total = OverloadUI.currentTargets.Count
+                            + OverloadUI.numSuccesses
+                            - disconnectQueue.Count;
+
+                string colorStr = ColorUtility.ToHtmlStringRGB(Color.green);
+
+                OverloadUI.LogConsole($"> <b><color=#{colorStr}>!! {playerData.DefaultOutfit.PlayerName} (ID : {playerData.ClientId}) Disconnected !! - [{OverloadUI.numSuccesses}/{total}]</color></b>");
+            }
+
+            disconnectQueue.Remove(clientId);
         }
     }
 }
@@ -116,16 +165,19 @@ public static class PingTracker_Update
 
         __instance.text.alignment = TMPro.TextAlignmentOptions.Center;
 
+        int ping = Utils.GetPing();
+        string pingText = Utils.GetColoredPingText($"PING: {ping} ms", ping);
+
         if (AmongUsClient.Instance.IsGameStarted)
         {
             __instance.aspectPosition.DistanceFromEdge = new Vector3(-0.21f, 0.50f, 0f);
 
-            __instance.text.text = $"MalumMenu by scp222thj & Astral ~ {Utils.GetColoredPingText(AmongUsClient.Instance.Ping)}";
+            __instance.text.text = $"MalumMenu by scp222thj & Astral ~ {pingText}";
 
             return;
         }
 
-        __instance.text.text = $"MalumMenu by scp222thj & Astral\n{Utils.GetColoredPingText(AmongUsClient.Instance.Ping)}";
+        __instance.text.text = $"MalumMenu by scp222thj & Astral\n{pingText}";
 
     }
 }

