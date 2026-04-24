@@ -333,22 +333,6 @@ public static class IntroCutscene_CoBegin
     }
 }
 
-[HarmonyPatch(typeof(AmongUsDateTime), nameof(AmongUsDateTime.UtcNow), MethodType.Getter)]
-public static class AmongUsDateTime_UtcNow
-{
-    // Prefix patch of AmongUsDateTime.UtcNow to spoof the date to April 2nd, 7:01 AM UTC
-    // This sets the map to dlekS ehT (The Skeld but flipped) when hosting a lobby
-    public static bool Prefix(ref Il2CppSystem.DateTime __result)
-    {
-        if (!CheatToggles.spoofAprilFoolsDate) return true;
-
-        var managedDate = new DateTime(DateTime.UtcNow.Year, 4, 2, 7, 1, 0, DateTimeKind.Utc);
-        __result = new Il2CppSystem.DateTime(managedDate.Ticks);
-
-        return false;
-    }
-}
-
 // Found here: https://github.com/g0aty/SickoMenu/blob/main/hooks/LobbyBehaviour.cpp
 [HarmonyPatch(typeof(GameContainer), nameof(GameContainer.SetupGameInfo))]
 public static class GameContainer_SetupGameInfo
