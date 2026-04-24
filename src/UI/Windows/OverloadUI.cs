@@ -8,7 +8,7 @@ public class OverloadUI : MonoBehaviour
 {
     public static int numSuccesses;
     public static int maxPossibleTargets;
-    public static int killSwitchThreshold = 500;
+    public static int killSwitchThreshold;
     public static HashSet<NetworkedPlayerInfo> currentTargets = new HashSet<NetworkedPlayerInfo>(new NetPlayerInfoCidComparer());
     private HashSet<NetworkedPlayerInfo> _tmpTargets = new HashSet<NetworkedPlayerInfo>(new NetPlayerInfoCidComparer());
     private bool _areTargetsUnlocked => !CheatToggles.runOverload || !CheatToggles.olLockTargets;
@@ -23,6 +23,17 @@ public class OverloadUI : MonoBehaviour
     private static Vector2 _scrollPosition = Vector2.zero;
     private static List<string> _logEntries = new();
     private const int MaxLogEntries = 300;
+
+    private void Start()
+    {
+        killSwitchThreshold = 500 * MalumMenu.killSwitchLvl.Value;
+
+        if (!CheatToggles.olAutoAdapt)
+        {
+            OverloadHandler.strength = MalumMenu.defaultStrength.Value;
+            OverloadHandler.cooldown = MalumMenu.defaultCooldown.Value;
+        }
+    }
 
     private void Update()
     {

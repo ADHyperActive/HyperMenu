@@ -45,6 +45,12 @@ public partial class MalumMenu : BasePlugin
     public static ConfigEntry<bool> guestMode;
     public static ConfigEntry<bool> autoLoadProfile;
     public static ConfigEntry<string> configEditor;
+    public static ConfigEntry<int> adaptMaxStrength;
+    public static ConfigEntry<float> adaptMaxCooldown;
+    public static ConfigEntry<float> attackLogDelay;
+    public static ConfigEntry<int> defaultStrength;
+    public static ConfigEntry<float> defaultCooldown;
+    public static ConfigEntry<int> killSwitchLvl;
 
     public override void Load()
     {
@@ -114,8 +120,65 @@ public partial class MalumMenu : BasePlugin
                                 true,
                                 "When enabled, it will stop Among Us from collecting analytics of your games and sending them to Innersloth using Unity Analytics");
 
-        // Passives are enabled by default
-        CheatToggles.unlockFeatures = CheatToggles.freeCosmetics = CheatToggles.avoidPenalties = true;
+        adaptMaxStrength = Config.Bind("MalumMenu.Overload",
+                                "AdaptMaxStrength",
+                                500,
+                                new ConfigDescription(
+                                    "Maximum total number of RPCs sent during one overload cycle in AutoAdapt mode. Automatically divided between targets and reduced based on ping. IMPORTANT: Only goes from 1 to 1000 RPCs",
+                                    new AcceptableValueRange<int>(1, 1000)
+                                ));
+
+        adaptMaxCooldown = Config.Bind("MalumMenu.Overload",
+                                "AdaptMaxCooldown",
+                                1f,
+                                new ConfigDescription(
+                                    "Maximum time (in seconds) for one full overload cycle to complete in AutoAdapt mode. Automatically distributed across targets (more targets = shorter delay per target). IMPORTANT: Only goes from 0s to 10s",
+                                    new AcceptableValueRange<float>(0f, 10f)
+                                ));
+
+        attackLogDelay = Config.Bind("MalumMenu.Overload",
+                                "AttackLogDelay",
+                                2f,
+                                "Minimum time (in seconds) between attack logs in normal (non-verbose) mode");
+
+        defaultStrength = Config.Bind("MalumMenu.Overload",
+                                "DefaultStrength",
+                                500,
+                                new ConfigDescription(
+                                    "Default number of malformed RPCs sent to each target during an overload cycle. Overridden if AutoAdapt mode is enabled. IMPORTANT: Only goes from 1 to 1000 RPCs",
+                                    new AcceptableValueRange<int>(1, 1000)
+                                ));
+
+        defaultCooldown = Config.Bind("MalumMenu.Overload",
+                                "DefaultCooldown",
+                                1f,
+                                new ConfigDescription(
+                                    "Default cooldown (in seconds) between each target during an overload cycle. Overridden if AutoAdapt mode is enabled. IMPORTANT: Only goes from 0s to 10s",
+                                    new AcceptableValueRange<float>(0f, 10f)
+                                ));
+
+        killSwitchLvl = Config.Bind("MalumMenu.Overload",
+                                "DefaultKillSwitchLevel",
+                                1,
+                                new ConfigDescription(
+                                    "Default level used by kill switch. Each level adds 500 ms to the max allowed ping before overload stops. Helps avoid lagging / disconnects. IMPORTANT: Only goes from level 1 (500 ms) to 6 (3000 ms)",
+                                    new AcceptableValueRange<int>(1, 6)
+                                ));
+
+        // Enabled by default
+        CheatToggles.unlockFeatures = true;
+        CheatToggles.freeCosmetics = true;
+        CheatToggles.avoidPenalties = true;
+
+        // Enabled by default
+        CheatToggles.olAutoAdapt = true;
+        CheatToggles.olKillSwitch = true;
+        CheatToggles.olAutoStop = true;
+        CheatToggles.olAutoClear = true;
+        CheatToggles.olLogStartStop = true;
+        CheatToggles.olLogAttack = true;
+        CheatToggles.olLogAddRemove = true;
+        CheatToggles.olLogDisconnect = true;
 
         Harmony.PatchAll();
 

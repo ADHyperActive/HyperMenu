@@ -6,7 +6,6 @@ using System.Linq;
 namespace MalumMenu;
 public static class OverloadHandler
 {
-    private const float _AttackLogCooldown = 2f;
     public static float cooldown;
     public static int strength;
     private static HashSet<int> _customTargets = new();
@@ -21,7 +20,7 @@ public static class OverloadHandler
         if (!CheatToggles.runOverload || OverloadUI.currentTargets.Count <= 0)
         {
             _timer = cooldown;
-            _attackLogTimer = _AttackLogCooldown;
+            _attackLogTimer = MalumMenu.attackLogDelay.Value;
             _nextTarget = int.MinValue;
             _hasRun = false;
             _rpcCounters.Clear();
@@ -58,13 +57,13 @@ public static class OverloadHandler
                         int newRpcCount = rpcCount + strength;
 
                         // Log number of broadcasted RPCs since last log
-                        // At most logs once per _AttackLogCooldown interval (in seconds)
+                        // At most logs once per attackLogDelay interval (in seconds)
 
-                        if (_attackLogTimer >= _AttackLogCooldown)
+                        if (_attackLogTimer >= MalumMenu.attackLogDelay.Value)
                         {
                             OverloadUI.LogConsole($"> <b><color=#{colorStr}>Broadcasted {newRpcCount} malformed RPCs to all players (ID : {broadcastId})</color></b>");
 
-                            _attackLogTimer -= _AttackLogCooldown;
+                            _attackLogTimer -= MalumMenu.attackLogDelay.Value;
 
                             _rpcCounters.Clear();
                         }
@@ -141,11 +140,11 @@ public static class OverloadHandler
             _hasRun = false;
 
             // ... (2) Log number of sent RPCs since last log for all currentTargets
-            // At most logs once per _AttackLogCooldown interval (in seconds)
+            // At most logs once per attackLogDelay interval (in seconds)
 
             if (!CheatToggles.olVerboseLogs)
             {
-                if (_attackLogTimer >= _AttackLogCooldown)
+                if (_attackLogTimer >= MalumMenu.attackLogDelay.Value)
                 {
                     string colorStr = ColorUtility.ToHtmlStringRGB(Palette.Orange);
 
@@ -162,7 +161,7 @@ public static class OverloadHandler
                         }
                     }
 
-                    _attackLogTimer -= _AttackLogCooldown;
+                    _attackLogTimer -= MalumMenu.attackLogDelay.Value;
 
                     _rpcCounters.Clear();
                 }
@@ -287,13 +286,13 @@ public static class OverloadHandler
                         ? 1 // Broadcast mode counts as one target
                         : Math.Max(1, OverloadUI.currentTargets.Count); // Prevents division by 0
 
-        float maxCooldown = 1f;
+        float maxCooldown = MalumMenu.adaptMaxCooldown.Value;
         float cooldown = maxCooldown / targetCount;
 
         int pingLevel = Math.Max(1, Utils.GetPing() / 100); // 0-99 ms = Lvl 1, 100-199 ms = Lvl 1, 200-299 ms = Lvl 2, ...
 
-        int maxStrength = 500;
-        int strength = maxStrength / pingLevel / targetCount;
+        int maxStrength = MalumMenu.adaptMaxStrength.Value;
+        int strength = Math.Max(1, maxStrength / pingLevel / targetCount);
 
         return (strength, cooldown);
     }

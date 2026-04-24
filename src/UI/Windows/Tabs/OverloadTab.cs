@@ -242,6 +242,18 @@ public class OverloadTab : ITab
             OverloadHandler.cooldown = clampCooldown;
         }
 
+        // Adjust bounds so sliders will never be out of bounds
+
+        while (_maxStrength < OverloadHandler.strength)
+        {
+            _maxStrength = _maxStrength*10;
+        }
+
+        while (_maxCooldown < OverloadHandler.cooldown)
+        {
+            _maxCooldown = _maxCooldown*10;
+        }
+
         if (isPressedMaxStrength)
         {
             if (_maxStrength >= 1000) // Max _maxStrength = 1000 RPCs
@@ -278,7 +290,7 @@ public class OverloadTab : ITab
 
                 OverloadHandler.cooldown = OverloadHandler.cooldown*10; // Adjust value to account for max change (x10)
 
-                _maxCooldown = _maxCooldown*10;
+                _maxCooldown = _maxCooldown*10; // Increment by x10 steps
             }
         }
 
