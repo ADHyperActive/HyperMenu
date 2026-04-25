@@ -112,7 +112,7 @@ public class OverloadTab : ITab
                         ? $"{rpcPerTarget*Math.Max(1, numTargetsPerSec)}"
                         : $"{rpcPerTarget}x{numTargetsPerSec}";
 
-        GUILayout.Toggle(CheatToggles.olShowRpcTotal, $" RPC/s : {rpcStr}{extraStr}");
+        CheatToggles.olShowRpcTotal = GUILayout.Toggle(CheatToggles.olShowRpcTotal, $" RPC/s : {rpcStr}{extraStr}");
 
         GUILayout.EndHorizontal();
 
