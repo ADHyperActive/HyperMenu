@@ -14,7 +14,7 @@ public static class MalumPPMCheats
     private static bool _teleportPlayerActive;
     private static bool _reportBodyActive;
     private static bool _ejectPlayerActive;
-    private static bool _changeRoleActive;
+    private static bool _setFakeRoleActive;
     private static bool _setFakeAliveActive;
     private static bool _forceRoleActive;
     private static RoleTypes? _oldRole = null;
@@ -238,19 +238,19 @@ public static class MalumPPMCheats
         }
     }
 
-    public static void ChangeRolePPM()
+    public static void SetFakeRolePPM()
     {
         if (CheatToggles.setFakeRole)
         {
 
-            if (!_changeRoleActive)
+            if (!_setFakeRoleActive)
             {
 
                 // Close any player pick menus already open & their cheats
                 if (PlayerPickMenu.playerpickMenu != null)
                 {
                     PlayerPickMenu.playerpickMenu.Close();
-                    CheatToggles.DisablePPMCheats("changeRole");
+                    CheatToggles.DisablePPMCheats("setFakeRole");
                 }
 
                 List<NetworkedPlayerInfo> playerDataList = new List<NetworkedPlayerInfo>();
@@ -293,7 +293,7 @@ public static class MalumPPMCheats
                 // Player pick menu made for changing your roles with a custom choice list
                 PlayerPickMenu.OpenPlayerPickMenu(playerDataList, (Action) (() =>
                 {
-                    // Log the originally assigned role before it gets changed by changeRole cheat
+                    // Log the originally assigned role before it gets changed by setFakeRole cheat
                     if (!Utils.isLobby && !Utils.isFreePlay && _oldRole == null)
                     {
                         _oldRole = PlayerControl.LocalPlayer.Data.RoleType;
@@ -330,7 +330,7 @@ public static class MalumPPMCheats
                     }
                 }));
 
-                _changeRoleActive = true;
+                _setFakeRoleActive = true;
             }
 
             // Deactivate cheat if menu is closed
@@ -342,9 +342,9 @@ public static class MalumPPMCheats
         }
         else
         {
-            if (_changeRoleActive)
+            if (_setFakeRoleActive)
             {
-                _changeRoleActive = false;
+                _setFakeRoleActive = false;
             }
         }
     }
