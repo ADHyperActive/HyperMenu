@@ -28,9 +28,9 @@ public static class PlayerPhysics_LateUpdate
         MalumPPMCheats.KillPlayerPPM();
         MalumPPMCheats.TelekillPlayerPPM();
         MalumPPMCheats.TeleportPlayerPPM();
-        MalumPPMCheats.ForceRolePPM();
         MalumPPMCheats.SetFakeRolePPM();
         MalumPPMCheats.SetFakeAlivePPM();
+        // MalumPPMCheats.ForceRolePPM();
 
         // This check ensures there is only one run per frame
         // so that OverloadHandler._timer progression remains accurate
