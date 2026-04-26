@@ -1,6 +1,7 @@
 using AmongUs.Data;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Il2CppSystem.Collections.Generic;
 
 namespace MalumMenu;
@@ -66,7 +67,13 @@ public static class ShapeshifterMinigame_Begin
             selectableElements.Add(shapeshifterPanel.Button);
         }
 
-        ControllerManager.Instance.OpenOverlayMenu(__instance.name, __instance.BackButton, __instance.DefaultButtonSelected, selectableElements, false);
+        string sceneName = SceneManager.GetActiveScene().name;
+        bool isMainMenuScene = sceneName == "MainMenu" || sceneName == "MatchMaking";
+
+        if (!isMainMenuScene)
+        {
+            ControllerManager.Instance.OpenOverlayMenu(__instance.name, __instance.BackButton, __instance.DefaultButtonSelected, selectableElements, false);
+        }
 
         PlayerPickMenu.isActive = false;
 

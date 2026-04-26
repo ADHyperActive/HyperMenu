@@ -234,7 +234,10 @@ public class OverloadUI : MonoBehaviour
         {
             _targetButtonStyle = new GUIStyle(GUI.skin.button)
             {
-                fontStyle = FontStyle.Italic
+                fontStyle = FontStyle.Italic,
+                fontSize = 13,
+                padding = new RectOffset { left = 10, right = 10, top = 6, bottom = 6 },
+                margin = new RectOffset { left = 2, right = 2, top = 3, bottom = 3 }
             };
         }
 
@@ -242,7 +245,10 @@ public class OverloadUI : MonoBehaviour
         {
             _normalButtonStyle = new GUIStyle(GUI.skin.button)
             {
-                fontStyle = FontStyle.Bold
+                fontStyle = FontStyle.Bold,
+                fontSize = 13,
+                padding = new RectOffset { left = 10, right = 10, top = 6, bottom = 6 },
+                margin = new RectOffset { left = 2, right = 2, top = 3, bottom = 3 }
             };
         }
 
@@ -250,7 +256,9 @@ public class OverloadUI : MonoBehaviour
         {
             _logStyle = new GUIStyle(GUI.skin.label)
             {
-                fontSize = 15
+                fontSize = 14,
+                richText = true,
+                wordWrap = true
             };
         }
     }
@@ -408,7 +416,7 @@ public class OverloadUI : MonoBehaviour
 
         bool startEnabled = !CheatToggles.runOverload && Utils.isPlayer;
 
-        Color startBackgroundColor = Color.green;
+        Color startBackgroundColor = new Color(0.2f, 0.65f, 0.35f, 1f);
         GUI.backgroundColor = startEnabled ? startBackgroundColor : Color.black;
 
         if (GUILayout.Button("START", GUILayout.Width(140f)) && startEnabled)
@@ -422,7 +430,7 @@ public class OverloadUI : MonoBehaviour
         // Utils.isPlayer check is unnecessary as MenuUI check already enforces it for runOverload
         bool stopEnabled = CheatToggles.runOverload;
 
-        Color stopBackgroundColor = Color.red;
+        Color stopBackgroundColor = new Color(0.75f, 0.2f, 0.2f, 1f);
         GUI.backgroundColor = stopEnabled ? stopBackgroundColor : Color.black;
 
         if (GUILayout.Button("STOP", GUILayout.Width(140f)) && stopEnabled)

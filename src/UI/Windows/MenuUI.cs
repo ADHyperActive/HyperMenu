@@ -44,8 +44,9 @@ public class MenuUI : MonoBehaviour
 
     public void InitStyles()
     {
-        GUI.skin.toggle.fontSize = GUI.skin.button.fontSize = GUI.skin.label.fontSize = 15;
-        GUI.skin.window.padding = new RectOffset { left = 10, right = 10, top = 28, bottom = 10 };
+        GUI.skin.toggle.fontSize = GUI.skin.button.fontSize = GUI.skin.label.fontSize = 14;
+        GUI.skin.window.padding = new RectOffset { left = 12, right = 12, top = 30, bottom = 12 };
+        GUI.skin.window.margin = new RectOffset { left = 8, right = 8, top = 8, bottom = 8 };
     }
 
     private void Update()
@@ -224,8 +225,8 @@ public class MenuUI : MonoBehaviour
         GUILayout.BeginHorizontal();
 
         // Left tab selector (18% width)
-        GUILayout.BeginVertical(GUILayout.Width(windowWidth * 0.18f));
-        GUILayout.Space(4);
+        GUILayout.BeginVertical(GUIStylePreset.ModernBox, GUILayout.Width(windowWidth * 0.2f));
+        GUILayout.Space(2);
 
         for (var i = 0; i < _tabs.Count; i++)
         {
@@ -233,10 +234,10 @@ public class MenuUI : MonoBehaviour
 
             if (_selectedTab == i)
             {
-                GUI.backgroundColor = new Color(0.3f, 0.3f, 0.3f);
+                GUI.backgroundColor = new Color(0.35f, 0.42f, 0.55f, 1f);
             }
 
-            if (GUILayout.Button(_tabs[i].name, GUIStylePreset.TabButton, GUILayout.Height(38)))
+            if (GUILayout.Button(_tabs[i].name, GUIStylePreset.TabButton, GUILayout.Height(40)))
                 _selectedTab = i;
 
             GUI.backgroundColor = standardColor;
@@ -245,19 +246,17 @@ public class MenuUI : MonoBehaviour
         GUILayout.Space(4);
         GUILayout.EndVertical();
 
-        // Vertical separator line + invisible space to create gap between the tab selector and the content
-        GUILayout.Box("", GUIStylePreset.Separator, GUILayout.Width(2f), GUILayout.ExpandHeight(true));
-        GUILayout.Space(12f);
+        GUILayout.Space(10f);
 
         // Right tab content and controls (82% width)
-        GUILayout.BeginVertical(GUILayout.Width(windowWidth * 0.82f));
+        GUILayout.BeginVertical(GUIStylePreset.ModernBox, GUILayout.Width(windowWidth * 0.8f));
         GUILayout.Space(2);
 
         // Tab-specific content
         if (_selectedTab >= 0 && _selectedTab < _tabs.Count)
         {
             GUILayout.Label(_tabs[_selectedTab].name, GUIStylePreset.TabTitle);
-            GUILayout.Box("", GUIStylePreset.Separator, GUILayout.Height(1.5f), GUILayout.ExpandWidth(true));
+            GUILayout.Box("", GUIStylePreset.Separator, GUILayout.Height(2f), GUILayout.ExpandWidth(true));
             GUILayout.Space(6);
             _tabs[_selectedTab].Draw();
         }
