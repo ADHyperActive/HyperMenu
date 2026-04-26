@@ -12,11 +12,11 @@ public struct CheatToggles
     public static bool noClip;
     public static bool teleportPlayer;
     public static bool teleportCursor;
-    public static bool fakeRevive;
     public static bool invertControls;
 
     // Roles
     public static bool setFakeRole;
+    public static bool setFakeAlive;
     public static bool noKillCd;
     public static bool showTasksMenu;
     public static bool completeMyTasks;
@@ -114,6 +114,29 @@ public struct CheatToggles
     public static bool animPet;
     public static bool moonWalk;
 
+    // Overload
+    public static bool showOverload;
+    public static bool showOverloadSettings;
+    public static bool olAutoStart;
+    public static bool olAutoAdapt;
+    public static bool olShowRpcTotal;
+    public static bool olAutoStop;
+    public static bool olLockTargets;
+    public static bool olKillSwitch;
+    public static bool olPlayerCooldown;
+    public static bool olAutoClear;
+    public static bool olLogStartStop;
+    public static bool olLogAddRemove;
+    public static bool olLogDisconnect;
+    public static bool olLogAttack;
+    public static bool olVerboseLogs;
+    public static bool runOverload;
+    public static bool overloadAll;
+    public static bool overloadHost;
+    public static bool overloadCrew;
+    public static bool overloadImps;
+    public static bool overloadReset;
+
     // Console
     public static bool showConsole;
     public static bool logDeaths;
@@ -186,14 +209,15 @@ public struct CheatToggles
         killPlayer = variableToKeep == "killPlayer" && killPlayer;
         telekillPlayer = variableToKeep == "telekillPlayer" && telekillPlayer;
         spectate = variableToKeep == "spectate" && spectate;
-        setFakeRole = variableToKeep == "changeRole" && setFakeRole;
+        setFakeRole = variableToKeep == "setFakeRole" && setFakeRole;
+        setFakeAlive = variableToKeep == "setFakeAlive" && setFakeAlive;
         forceRole = variableToKeep == "forceRole" && forceRole;
         teleportPlayer = variableToKeep == "teleportPlayer" && teleportPlayer;
     }
 
     public static bool ShouldPPMClose()
     {
-        return !setFakeRole && !forceRole && !ejectPlayer && !reportBody && !telekillPlayer && !killPlayer && !spectate && !teleportPlayer;
+        return !setFakeRole && !setFakeAlive && !forceRole && !ejectPlayer && !reportBody && !telekillPlayer && !killPlayer && !spectate && !teleportPlayer;
     }
 
     // Disables all cheat toggles by setting all to false using the cached ToggleFields
