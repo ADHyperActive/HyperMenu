@@ -170,6 +170,7 @@ public partial class MalumMenu : BasePlugin
                                 ));
 
         // Enabled by default
+        CheatToggles.antiOverload = true;
         CheatToggles.unlockFeatures = true;
         CheatToggles.freeCosmetics = true;
         CheatToggles.avoidPenalties = true;
