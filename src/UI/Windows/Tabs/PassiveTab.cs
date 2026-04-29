@@ -17,6 +17,8 @@ public class PassiveTab : ITab
 
     private void DrawGeneral()
     {
+        CheatToggles.antiOverload = GUILayout.Toggle(CheatToggles.antiOverload, " Anti-Overload");
+
         CheatToggles.freeCosmetics = GUILayout.Toggle(CheatToggles.freeCosmetics, " Free Cosmetics");
 
         CheatToggles.avoidPenalties = GUILayout.Toggle(CheatToggles.avoidPenalties, " Avoid Penalties");

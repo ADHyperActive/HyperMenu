@@ -162,6 +162,7 @@ public struct CheatToggles
     public static bool bypassHostOnly;
 
     // Passive
+    public static bool antiOverload;
     public static bool unlockFeatures;
     public static bool freeCosmetics;
     public static bool avoidPenalties;
