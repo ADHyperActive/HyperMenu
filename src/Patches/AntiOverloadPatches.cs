@@ -55,7 +55,7 @@ public static class RpcValidator
             RpcCalls.SetStartCounter    => 1,
             RpcCalls.EnterVent          => 1,
             RpcCalls.ExitVent           => 1,
-            RpcCalls.SnapTo             => 4, // at minimum one float component of Vector2
+            RpcCalls.SnapTo             => 8, // Vector2 x (float) + Vector2 y (float) = 8 bytes minimum
             RpcCalls.CloseMeeting       => 0, // no payload
             RpcCalls.VotingComplete     => 1,
             RpcCalls.CastVote           => 2, // byte srcPlayerId + byte suspectPlayerId
@@ -65,7 +65,7 @@ public static class RpcValidator
             RpcCalls.RepairSystem       => 1,
             RpcCalls.SetTasks           => 1,
             RpcCalls.ClimbLadder        => 2, // byte ladderId + byte climbLadderSid
-            RpcCalls.UsePlatform        => 0, // no payload required
+            RpcCalls.UsePlatform        => 0, // no payload
             _                           => 0, // unknown / newer RPCs pass through
         };
 
