@@ -8,7 +8,8 @@
         <VersionPrefix>4.0.5</VersionPrefix>
         <Description>Among Us cheat menu based on MalumMenu by scp222thj and Astral</Description>
         <Authors>ADHyperActive</Authors>
-    </PropertyGroup>
+		<UnityBaseLibsDirectory>C:\Program Files\Unity\Hub\Editor\2022.3.62f3\Editor\Data\PlaybackEngines\windowsstandalonesupport\Variations\il2cpp\Managed</UnityBaseLibsDirectory>
+	</PropertyGroup>
 
     <!--<ItemGroup>
         <EmbeddedResource Include=".\Assets\**" />
