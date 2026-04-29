@@ -5,9 +5,9 @@
         <DebugType>embedded</DebugType>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-        <VersionPrefix>3.0.2</VersionPrefix>
-        <Description>all play and no cheats makes among us a dull game</Description>
-        <Authors>scp222thj, astra1dev</Authors>
+        <VersionPrefix>4.1.2</VersionPrefix>
+        <Description>Among Us cheat menu based on MalumMenu by scp222thj and Astral</Description>
+        <Authors>ADHyperActive</Authors>
     </PropertyGroup>
 
     <!--<ItemGroup>
