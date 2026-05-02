@@ -162,6 +162,7 @@ public struct CheatToggles
     public static bool bypassHostOnly;
 
     // Passive
+    public static bool antiOverload;
     public static bool unlockFeatures;
     public static bool freeCosmetics;
     public static bool avoidPenalties;
@@ -173,6 +174,7 @@ public struct CheatToggles
     public static bool rgbMode;
     public static bool stealthMode;
     public static bool panicMode;
+    public static bool streamerMode;
 
     // Config
     public static bool reloadConfig;

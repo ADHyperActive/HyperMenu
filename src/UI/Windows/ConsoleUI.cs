@@ -14,7 +14,7 @@ public class ConsoleUI : MonoBehaviour
     private static Vector2 _scrollPosition = Vector2.zero;
     private static List<string> _logEntries = new();
     private const int MaxLogEntries = 300;
-    private static readonly string _logFilePath = $"Console.{System.DateTime.Now:MM_dd_yyyy.HH_mm_ss}.log";
+    private static readonly string _logFilePath = $"HyperMenu/Logs/Console.{System.DateTime.Now:MM_dd_yyyy.HH_mm_ss}.log";
 
     private void Start()
     {

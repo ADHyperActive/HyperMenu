@@ -43,7 +43,7 @@ public static class PlayerPhysics_LateUpdate
         TracersHandler.DrawPlayerTracer(__instance);
 
         GameObject[] bodyObjects = GameObject.FindGameObjectsWithTag("DeadBody");
-        foreach(GameObject bodyObject in bodyObjects) // Finds and loops through all dead bodies
+        foreach (GameObject bodyObject in bodyObjects) // Finds and loops through all dead bodies
         {
             DeadBody deadBody = bodyObject.GetComponent<DeadBody>();
 
