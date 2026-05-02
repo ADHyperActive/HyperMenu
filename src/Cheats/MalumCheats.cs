@@ -90,14 +90,6 @@ public static class MalumCheats
         CheatToggles.forceStartGame = false;
     }
 
-    public static void NoKillCdCheat(PlayerControl playerControl)
-    {
-        if (CheatToggles.noKillCd && playerControl.killTimer > 0f)
-        {
-            playerControl.SetKillTimer(0f);
-        }
-    }
-
     public static void CompleteMyTasksCheat()
     {
         if (CheatToggles.completeMyTasks)
