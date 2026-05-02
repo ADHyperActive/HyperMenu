@@ -93,7 +93,7 @@ public class ConsoleUI : MonoBehaviour
             {
                 _logEntries.RemoveAt(0); // Remove the oldest log entry
             }
-            _logEntries.add("Error saving to log file.");
+            _logEntries.Add("Error saving to log file.");
         }
 
         // Scroll to the bottom

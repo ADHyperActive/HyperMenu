@@ -43,15 +43,12 @@ public static class RpcValidator
             RpcCalls.SetName            => 1,
             RpcCalls.CheckColor         => 1,
             RpcCalls.SetColor           => 1,
-            RpcCalls.SetHat             => 1,
-            RpcCalls.SetSkin            => 1,
             RpcCalls.ReportDeadBody     => 1,
             RpcCalls.MurderPlayer       => 1,
             RpcCalls.SendChat           => 1,
             RpcCalls.StartMeeting       => 1,
             RpcCalls.SetScanner         => 2, // bool on + byte count
             RpcCalls.SendChatNote       => 2, // byte srcPlayerId + byte noteType
-            RpcCalls.SetPet             => 1,
             RpcCalls.SetStartCounter    => 1,
             RpcCalls.EnterVent          => 1,
             RpcCalls.ExitVent           => 1,
@@ -62,7 +59,6 @@ public static class RpcValidator
             RpcCalls.ClearVote          => 0, // no payload
             RpcCalls.AddVote            => 1,
             RpcCalls.CloseDoorsOfType   => 1,
-            RpcCalls.RepairSystem       => 1,
             RpcCalls.SetTasks           => 1,
             RpcCalls.ClimbLadder        => 2, // byte ladderId + byte climbLadderSid
             RpcCalls.UsePlatform        => 0, // no payload
