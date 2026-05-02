@@ -261,6 +261,8 @@ public static class Utils
         }
     }
 
+    // Returns the max number of nested RPCs that can be in a GameData message
+    // without getting kicked by AC
     public static int GetMaxRpcPackingLimit()
     {
         int num = 0;
