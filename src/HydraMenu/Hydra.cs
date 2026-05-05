@@ -19,7 +19,7 @@ public class Hydra : BasePlugin
 
 	public override void Load()
 	{
-		Harmony harmony = new Harmony(MyPluginInfo.PLUGIN_GUID);
+		Harmony harmony = new Harmony("com.mrd.hydramenu");
 		harmony.PatchAll();
 
 		AddComponent<MainUI>();
@@ -29,7 +29,7 @@ public class Hydra : BasePlugin
 		routines = AddComponent<RoutineManager>();
 
 		Log = base.Log;
-		Log.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} has loaded!");
+		Log.LogInfo($"Plugin com.mrd.hydramenu has loaded!");
 	}
 
 	[HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Awake))]

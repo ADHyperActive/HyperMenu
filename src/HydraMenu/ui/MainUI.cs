@@ -89,7 +89,7 @@ namespace HydraMenu.ui
 			GUIStyle mainBox = Styles.MainBox;
 
 			// Render UI header
-			GUI.Box(new Rect(windowPosition.x, windowPosition.y, HeaderSize.x, HeaderSize.y), $"{MyPluginInfo.PLUGIN_NAME} - {MyPluginInfo.PLUGIN_VERSION}", mainBox);
+			GUI.Box(new Rect(windowPosition.x, windowPosition.y, HeaderSize.x, HeaderSize.y), $"Hydra - 1.3.2", mainBox);
 
 			// Render Features Pane
 			GUI.Box(new Rect(FeaturePanePosition.x, FeaturePanePosition.y, FeaturePaneSize.x, FeaturePaneSize.y), "", mainBox);
