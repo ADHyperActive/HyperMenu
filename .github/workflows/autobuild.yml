@@ -1,4 +1,4 @@
-name: Build and Release BepInEx Mod
+name: Autobuild
 
 on:
   workflow_dispatch:

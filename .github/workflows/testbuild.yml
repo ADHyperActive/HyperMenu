@@ -1,0 +1,53 @@
+name: Test mod build
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for build'
+        required: false
+        default: 'Manual trigger'
+      version_override:
+        description: 'Version override (e.g. 1.2.3). Leave empty to use vars.VERSION'
+        required: false
+        type: string
+
+# Required to allow the GitHub Action to create a release and upload assets
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    # Define environment variables to make customization easier
+    env:
+      # Change this if your project file is in a subfolder (e.g., src/MyMod/MyMod.csproj)
+      PROJECT_PATH: ./src 
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Determine Version
+        run: |
+          if [ -n "${{ github.event.inputs.version_override }}" ]; then
+            echo "MOD_VERSION=${{ github.event.inputs.version_override }}" >> $GITHUB_ENV
+            echo "Using manual version override: ${{ github.event.inputs.version_override }}"
+          else
+            echo "MOD_VERSION=${{ vars.VERSION }}" >> $GITHUB_ENV
+            echo "Using default repository variable version: ${{ vars.VERSION }}"
+          fi
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          # Change this to match the SDK version you use to compile (e.g., '6.0.x', '8.0.x')
+          dotnet-version: '6.0.x' 
+
+      - name: Restore dependencies
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - name: Build the project
+        # Builds the project and outputs the files into a temporary staging folder
+        run: dotnet build ${{ env.PROJECT_PATH }} --configuration Release --no-restore --output ./staging/BepInEx/plugins
