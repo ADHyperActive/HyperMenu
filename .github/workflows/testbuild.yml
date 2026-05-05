@@ -1,4 +1,4 @@
-name: Build and Release BepInEx Mod
+name: Test mod build
 
 on:
   workflow_dispatch:
