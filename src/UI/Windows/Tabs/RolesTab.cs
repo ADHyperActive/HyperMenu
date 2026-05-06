@@ -1,4 +1,5 @@
 using UnityEngine;
+using MalumMenu.features;
 
 namespace MalumMenu;
 
@@ -62,6 +63,8 @@ public class RolesTab : ITab
 
         CheatToggles.killReach = GUILayout.Toggle(CheatToggles.killReach, " Kill Reach");
 
+        Roles.SkipSabotageChecks.SabotageInVents = GUILayout.Toggle(Roles.SkipSabotageChecks.SabotageInVents, " Allow Sabotaging In Vents As Imposter");
+
         CheatToggles.impostorTasks = GUILayout.Toggle(CheatToggles.impostorTasks, " Allow Tasks");
     }
 
@@ -77,6 +80,8 @@ public class RolesTab : ITab
     private void DrawCrewmate()
     {
         GUILayout.Label("Crewmate", GUIStylePreset.TabSubtitle);
+
+        Roles.SkipSabotageChecks.SabotageAsCrewmate = GUILayout.Toggle(Roles.SkipSabotageChecks.SabotageAsCrewmate, " Sabotage As Crewmate");
 
         CheatToggles.showTasksMenu = GUILayout.Toggle(CheatToggles.showTasksMenu, " Show Tasks Menu");
     }

@@ -2,12 +2,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+
 namespace MalumMenu;
 
 public class MenuUI : MonoBehaviour
 {
-    public static int windowHeight = 600;
-    public static int windowWidth = 800;
+    public static int windowHeight = 800;
+    public static int windowWidth = 1000;
 
     public static bool isGUIActive = false;
     private Rect _windowRect;
@@ -21,15 +22,22 @@ public class MenuUI : MonoBehaviour
     {
         // Add all tabs on start
         _tabs.Add(new MovementTab());
+        _tabs.Add(new SelfTab());
         _tabs.Add(new ESPTab());
         _tabs.Add(new RolesTab());
+        _tabs.Add(new PlayersTab());
         _tabs.Add(new ShipTab());
+        _tabs.Add(new SabotageTab());
         _tabs.Add(new ChatTab());
         _tabs.Add(new AnimationsTab());
         _tabs.Add(new OverloadTab());
         _tabs.Add(new ConsoleTab());
         _tabs.Add(new HostOnlyTab());
+        _tabs.Add(new HostOnlyTab2());
         _tabs.Add(new PassiveTab());
+        _tabs.Add(new TrollTab());
+        _tabs.Add(new ProtectionsTab());
+        _tabs.Add(new AnticheatTab());
         _tabs.Add(new ModesTab());
         _tabs.Add(new ConfigTab());
 
