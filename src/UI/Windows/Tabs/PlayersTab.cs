@@ -147,7 +147,13 @@ public class PlayersTab : ITab
 
         if (GUILayout.Button("Force Meeting As"))
         {
-            Utilities.OpenMeeting(target, null);
+            if (Utils.isHost)
+            {
+                Utilities.OpenMeeting(target, null);
+            } else
+            {
+                MalumMenu.notifications.Send("Meeting Forcer", "This is a host-only cheat.");
+            }
         }
 
         GUILayout.BeginHorizontal();
@@ -156,6 +162,10 @@ public class PlayersTab : ITab
             if (MeetingHud.Instance == null)
                {
                    MalumMenu.notifications.Send("Vote Forcer", "This option can only be used when there is an active meeting.");
+            }
+            else if (!Utils.isHost)
+            {
+                MalumMenu.notifications.Send("Vote Forcer", "This is a host-only cheat.");
             }
             else
             {
@@ -172,37 +182,62 @@ public class PlayersTab : ITab
 
         if (GUILayout.Button("Eject"))
         {
-            if (MeetingHud.Instance == null)
+            if (!Utils.isHost)
             {
-                MeetingHud.Instance = UnityEngine.Object.Instantiate<MeetingHud>(HudManager.Instance.MeetingPrefab);
-                AmongUsClient.Instance.Spawn(MeetingHud.Instance, -2, SpawnFlags.None);
-            }
+                MalumMenu.notifications.Send("Eject", "This is a host-only cheat.");
+            } else
+            {
+                if (MeetingHud.Instance == null)
+                {
+                    MeetingHud.Instance = UnityEngine.Object.Instantiate<MeetingHud>(HudManager.Instance.MeetingPrefab);
+                    AmongUsClient.Instance.Spawn(MeetingHud.Instance, -2, SpawnFlags.None);
+                }
 
-            MeetingHud.VoterState[] votes = Array.Empty<MeetingHud.VoterState>();
-            MeetingHud.Instance.RpcVotingComplete(votes, target.Data, false);
-            MeetingHud.Instance.RpcClose();
+                MeetingHud.VoterState[] votes = Array.Empty<MeetingHud.VoterState>();
+                MeetingHud.Instance.RpcVotingComplete(votes, target.Data, false);
+                MeetingHud.Instance.RpcClose();
+            }
         }
         GUILayout.EndHorizontal();
 
         if (GUILayout.Button("Frame Shapeshift"))
         {
-            target.StartCoroutine(AttemptShapeshiftFrame(target).WrapToIl2Cpp());
+            if (!Utils.isHost)
+            {
+                MalumMenu.notifications.Send("Frame Shapesift", "This is a host-only cheat.");
+            } else
+            {
+                target.StartCoroutine(AttemptShapeshiftFrame(target).WrapToIl2Cpp());
+            }
         }
 
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Flood Player with Tasks"))
         {
-            byte[] taskIds = new byte[255];
-            for (byte i = 0; i < 255; i++)
+            if (!Utils.isHost)
             {
-                taskIds[i] = i;
+                MalumMenu.notifications.Send("Task Flooder", "This is a host-only cheat.");
             }
-            target.Data.RpcSetTasks(taskIds);
+            else
+            {
+                byte[] taskIds = new byte[255];
+                for (byte i = 0; i < 255; i++)
+                {
+                    taskIds[i] = i;
+                }
+                target.Data.RpcSetTasks(taskIds);
+            }
         }
 
         if (GUILayout.Button("Clear Tasks"))
         {
-            target.Data.RpcSetTasks(Array.Empty<byte>());
+            if (!Utils.isHost)
+            {
+                MalumMenu.notifications.Send("Clear Tasks", "This is a host-only cheat.");
+            } else
+            {
+                target.Data.RpcSetTasks(Array.Empty<byte>());
+            }
         }
         GUILayout.EndHorizontal();
 

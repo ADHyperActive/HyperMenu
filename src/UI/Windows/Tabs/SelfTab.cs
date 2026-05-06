@@ -69,30 +69,60 @@ namespace MalumMenu
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Start Medbay Scan"))
             {
-                Network.SendSetScanner(true);
+                if (!Utils.isLobby)
+                {
+                    Network.SendSetScanner(true);
+                }else
+                {
+                    MalumMenu.notifications.Send("Anticheat Notice", "This cheat is disabled in lobby due to anticheat detection. You can use it once the game starts.");
+                }
             }
 
             if (GUILayout.Button("Finish Medbay Scan"))
             {
-                Network.SendSetScanner(false);
+                if (!Utils.isLobby)
+                {
+                    Network.SendSetScanner(false);
+                }else
+                {
+                    MalumMenu.notifications.Send("Anticheat Notice", "This cheat is disabled in lobby due to anticheat detection. You can use it once the game starts.");
+                }
             }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             if (GUILayout.Button("Clear Asteroids"))
             {
-                Network.SendPlayAnimation((byte)TaskTypes.ClearAsteroids);
+                if (!Utils.isLobby)
+                {
+                    Network.SendPlayAnimation((byte)TaskTypes.ClearAsteroids);
+                }else
+                {
+                    MalumMenu.notifications.Send("Anticheat Notice", "This cheat is disabled in lobby due to anticheat detection. You can use it once the game starts.");
+                }
             }
 
             if (GUILayout.Button("Empty Garbage"))
             {
-                Network.SendPlayAnimation((byte)TaskTypes.EmptyGarbage);
+                if (!Utils.isLobby)
+                {
+                    Network.SendPlayAnimation((byte)TaskTypes.EmptyGarbage);
+                }else
+                {
+                    MalumMenu.notifications.Send("Anticheat Notice", "This cheat is disabled in lobby due to anticheat detection. You can use it once the game starts.");
+                }
             }
             GUILayout.EndHorizontal();
 
             if (GUILayout.Button("Prime Shields"))
             {
-                Network.SendPlayAnimation((byte)TaskTypes.PrimeShields);
+                if (!Utils.isLobby)
+                {
+                    Network.SendPlayAnimation((byte)TaskTypes.PrimeShields);
+                } else
+                {
+                    MalumMenu.notifications.Send("Anticheat Notice", "This cheat is disabled in lobby due to anticheat detection. You can use it once the game starts.");
+                }
             }
 
             GUILayout.Space(5);
