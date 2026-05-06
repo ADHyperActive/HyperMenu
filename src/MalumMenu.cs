@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using BepInEx.Configuration;
 using BepInEx.Logging;
 using HarmonyLib;
+using MalumMenu.features;
+using MalumMenu.routines;
+using MalumMenu.ui;
 
 namespace MalumMenu;
 
@@ -56,11 +59,18 @@ public partial class MalumMenu : BasePlugin
     public static ConfigEntry<float> defaultCooldown;
     public static ConfigEntry<int> killSwitchLvl;
 
+    public static RoutineManager routines;
+    public static NotificationManager notifications;
+
     public override void Load()
     {
         Instance = this;
         Log = base.Log;
+		Log.LogInfo($"HyperMenu has loaded!");
         Plugin = this;
+        notifications = AddComponent<NotificationManager>();
+        routines = AddComponent<RoutineManager>();
+
 
         // Loads config settings
         menuKeybind = Config.Bind("MalumMenu.GUI",

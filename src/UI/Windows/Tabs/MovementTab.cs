@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 namespace MalumMenu;
 
@@ -9,6 +10,10 @@ public class MovementTab : ITab
 
     public void Draw()
     {
+        Vector2 position = PlayerControl.LocalPlayer.transform.position;
+
+        GUILayout.Label($"Current Map: {Utilities.GetCurrentMap()}\nCurrent Position:\nX: {position.x:F2}\nY: {position.y:F2}");
+
         GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.425f));
 
         DrawGeneral();
@@ -50,5 +55,37 @@ public class MovementTab : ITab
         CheatToggles.teleportCursor = GUILayout.Toggle(CheatToggles.teleportCursor, " to Cursor");
 
         CheatToggles.teleportPlayer = GUILayout.Toggle(CheatToggles.teleportPlayer, " to Player");
+
+        Teleporter.UseSnapToRPC = GUILayout.Toggle(Teleporter.UseSnapToRPC, "Use SnapTo RPC For Teleports");
+        GUILayout.Label("Teleport To Location:");
+
+        Dictionary<string, Vector2> teleportLocations = Teleporter.GetTeleportLocations();
+
+        byte i = 0;
+        foreach (var (key, value) in teleportLocations)
+        {
+            if (i % 2 == 0)
+            {
+                GUILayout.BeginHorizontal();
+            }
+
+            if (GUILayout.Button(key))
+            {
+                Teleporter.TeleportTo(value);
+            }
+
+            if (i % 2 != 0)
+            {
+                GUILayout.EndHorizontal();
+            }
+
+            i++;
+        }
+
+        // If the amount of teleport locations is an odd number then we won't be ending the horizontal layout, so we check if we need to end it here
+        if (i % 2 != 0)
+        {
+            GUILayout.EndHorizontal();
+        }
     }
 }
