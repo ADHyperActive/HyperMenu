@@ -37,6 +37,7 @@ public partial class MalumMenu : BasePlugin
     public static string hyperVersion = "4.0.5";
     public static string hyperBuild = "Stable";
     public static List<string> supportedAU = new List<string> { "2026.3.31" };
+    public static List<string> toleratedAU = new List<string> { "2026.2.24", "2026.3.17" };
     public static bool isPanicked = false;
     public static bool inStealthMode = false;
 
@@ -230,9 +231,12 @@ public partial class MalumMenu : BasePlugin
             if (scene.name == "MainMenu" && !(inStealthMode || isPanicked))
             {
                 // Warns about unsupported AU versions
-                if (!supportedAU.Contains(Application.version))
+                if (!supportedAU.Contains(Application.version) && !toleratedAU.Contains(Application.version))
                 {
-                    Utils.ShowPopup("\nThis version of HyperMenu and this version of Among Us are incompatible\n\nInstall the right version to avoid problems");
+                    Utils.ShowNewPopup("This version of HyperMenu and this version of Among Us are incompatible\n\nInstall the right version to avoid problems");
+                } else if (!supportedAU.Contains(Application.version) && toleratedAU.Contains(Application.version))
+                {
+                    Utils.ShowNewPopup("This version of HyperMenu and this version of Among Us are not fully compatible\n\nSome features may not work properly, as HyperMenu is not updated to keep compatibility with older Among Us versions.");
                 }
             }
         }));

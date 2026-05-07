@@ -10,11 +10,20 @@ public class MovementTab : ITab
 
     public void Draw()
     {
+        GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.425f));
+
+        if (PlayerControl.LocalPlayer == null)
+        {
+            GUILayout.Label("You need to be in game for this to work.");
+            GUILayout.EndVertical();
+            return;
+        }
+
         Vector2 position = PlayerControl.LocalPlayer.transform.position;
 
         GUILayout.Label($"Current Map: {Utilities.GetCurrentMap()}\nCurrent Position:\nX: {position.x:F2}\nY: {position.y:F2}");
 
-        GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.425f));
+        GUILayout.Space(15);
 
         DrawGeneral();
 
@@ -27,6 +36,7 @@ public class MovementTab : ITab
 
     private void DrawGeneral()
     {
+        MalumMenu.Log.LogInfo($"Drawing General Movement Tab");
         CheatToggles.noClip = GUILayout.Toggle(CheatToggles.noClip, " NoClip");
 
         CheatToggles.invertControls = GUILayout.Toggle(CheatToggles.invertControls, " Invert Controls");
@@ -45,11 +55,13 @@ public class MovementTab : ITab
                 Utils.SnapSpeedToDefault(0.05f);
                 GUILayout.Label($"Current Speed: {PlayerControl.LocalPlayer?.MyPhysics.Speed} {(Utils.IsSpeedDefault() ? "(Default)" : "")}");
             }
-        } catch (NullReferenceException) {}
+        } catch (NullReferenceException) { MalumMenu.Log.LogWarning($"Failed to draw general movement tab."); }
+        MalumMenu.Log.LogInfo($"Finished Drawing General Movement Tab");
     }
 
     private void DrawTeleport()
     {
+        MalumMenu.Log.LogInfo($"Drawing Teleport Tab");
         GUILayout.Label("Teleport", GUIStylePreset.TabSubtitle);
 
         CheatToggles.teleportCursor = GUILayout.Toggle(CheatToggles.teleportCursor, " to Cursor");
@@ -87,5 +99,6 @@ public class MovementTab : ITab
         {
             GUILayout.EndHorizontal();
         }
+        MalumMenu.Log.LogInfo($"Finished Drawing Teleport Tab");
     }
 }

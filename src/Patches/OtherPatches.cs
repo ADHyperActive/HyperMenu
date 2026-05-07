@@ -144,6 +144,10 @@ public static class VersionShower_Start
         {
             __instance.text.text =  $"HyperMenu V{MalumMenu.hyperVersion}, MalumMenu V{MalumMenu.malumVersion} ( AU V{Application.version})"; // Supported
         }
+        else if (MalumMenu.toleratedAU.Contains(Application.version)) // Checks if Among Us version is tolerated
+        {
+            __instance.text.text =  $"HyperMenu V{MalumMenu.hyperVersion}, MalumMenu V{MalumMenu.malumVersion} (<color=yellow>AU V{Application.version}</color>)"; // Tolerated
+        }
         else
         {
             __instance.text.text =  $"HyperMenu V{MalumMenu.hyperVersion}, MalumMenu V{MalumMenu.malumVersion} (<color=red>AU V{Application.version}</color>)"; // Unsupported

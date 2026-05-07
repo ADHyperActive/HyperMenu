@@ -7,8 +7,8 @@ namespace MalumMenu;
 
 public class MenuUI : MonoBehaviour
 {
-    public static int windowHeight = 800;
-    public static int windowWidth = 1000;
+    public static int windowHeight = 600;
+    public static int windowWidth = 800;
 
     public static bool isGUIActive = false;
     private Rect _windowRect;
