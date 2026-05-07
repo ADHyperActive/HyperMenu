@@ -7,8 +7,12 @@ namespace MalumMenu
     {
         public string name => "Anticheat";
 
+        private Vector2 _scrollPosition = Vector2.zero;
+
         public void Draw()
         {
+            _scrollPosition = GUILayout.BeginScrollView(_scrollPosition);
+
             Anticheat.Enabled = GUILayout.Toggle(Anticheat.Enabled, "Enable HyperMenu Anticheat");
 
             Anticheat.CheckSpoofedPlatforms = GUILayout.Toggle(Anticheat.CheckSpoofedPlatforms, "Flag Spoofed Platform Data");
@@ -29,6 +33,8 @@ namespace MalumMenu
             GUILayout.Label($"Punish the player with: {Anticheat.punishment}");
             Anticheat.punishment = (Anticheat.Punishments)GUILayout.HorizontalSlider((float)Anticheat.punishment, 0, 3);
             GUILayout.EndHorizontal();
+
+            GUILayout.EndScrollView();
         }
     }
 }
