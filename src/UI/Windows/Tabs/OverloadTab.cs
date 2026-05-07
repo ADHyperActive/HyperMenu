@@ -20,15 +20,26 @@ public class OverloadTab : ITab
 
         GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.425f));
 
-        DrawGeneral();
+        if (MalumMenu.overloadFixed)
+        {
+            DrawGeneral();
 
-        GUILayout.Space(15);
+            GUILayout.Space(15);
 
-        DrawSettingsToggle();
+            DrawSettingsToggle();
+        } else
+        {
+            GUILayout.Label("Overload has been patched by Innersloth.");
+            GUILayout.Label("Until a workaround is found, overload features will be unavailable.");
+            GUILayout.Label("We apologize for the inconvenience.");
+            GUILayout.Space(5);
+            GUILayout.Label(" - The HyperMenu Team");
+        }
+        
 
         GUILayout.EndVertical();
 
-        if (CheatToggles.showOverloadSettings)
+        if (CheatToggles.showOverloadSettings && MalumMenu.overloadFixed)
         {
             GUILayout.BeginVertical(GUI.skin.box, GUILayout.Width(MenuUI.windowWidth * 0.75f));
 

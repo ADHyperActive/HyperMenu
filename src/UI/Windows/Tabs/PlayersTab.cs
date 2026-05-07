@@ -13,6 +13,7 @@ public class PlayersTab : ITab
     public string name => "Players";
 
     private Vector2 _subsectionScrollVector = Vector2.zero;
+    private Vector2 _subsectionScrollVector2 = Vector2.zero;
     private static CrewmateColor _selectedColor = CrewmateColor.Red;
 
     public void Draw()
@@ -27,14 +28,16 @@ public class PlayersTab : ITab
 
         // Left panel: Player list
         GUILayout.BeginVertical(GUILayout.Width(MenuUI.windowWidth * 0.35f));
+        _subsectionScrollVector = GUILayout.BeginScrollView(_subsectionScrollVector);
         DrawPlayerList();
+        GUILayout.EndScrollView();
         GUILayout.EndVertical();
 
         // Right panel: Player controls
         if (PlayersSection.selectedPlayer != null)
         {
             GUILayout.BeginVertical();
-            _subsectionScrollVector = GUILayout.BeginScrollView(_subsectionScrollVector);
+            _subsectionScrollVector2 = GUILayout.BeginScrollView(_subsectionScrollVector2);
             DrawPlayerControls(PlayersSection.selectedPlayer);
             GUILayout.EndScrollView();
             GUILayout.EndVertical();

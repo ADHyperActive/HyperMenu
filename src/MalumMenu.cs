@@ -40,6 +40,7 @@ public partial class MalumMenu : BasePlugin
     public static List<string> toleratedAU = new List<string> { "2026.2.24", "2026.3.17" };
     public static bool isPanicked = false;
     public static bool inStealthMode = false;
+    public static bool overloadFixed = false;
 
     public static ConfigEntry<string> menuKeybind;
     public static ConfigEntry<string> menuHtmlColor;
